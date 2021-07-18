@@ -2,6 +2,7 @@ package br.com.massao.logrequest.resource;
 
 import br.com.massao.logrequest.dto.LogRequest;
 import br.com.massao.logrequest.dto.LogRequestForm;
+import br.com.massao.logrequest.exception.ApiError;
 import br.com.massao.logrequest.exception.NotFoundException;
 import br.com.massao.logrequest.model.LogRequestModel;
 import br.com.massao.logrequest.service.LogRequestService;
@@ -41,7 +42,7 @@ public class LogRequestResource {
     @GetMapping
     @ApiOperation(value = "List all logs")
     @ApiResponses(value = {
-            @ApiResponse(code = 500, message = "Internal Server Error")
+            @ApiResponse(code = 500, message = "Internal Server Error", response = ApiError.class)
     })
     public ResponseEntity<Page<LogRequest>> list(@PageableDefault(size = 3, sort = "id") Pageable page) {
 
@@ -62,8 +63,8 @@ public class LogRequestResource {
     @ApiOperation(value = "Find a log request by id")
     @ApiResponses(value = {
             @ApiResponse(code = 404, message = "Not Found"),
-            @ApiResponse(code = 400, message = "Bad Request"),
-            @ApiResponse(code = 500, message = "Internal Server Error")
+            @ApiResponse(code = 400, message = "Bad Request", response = ApiError.class),
+            @ApiResponse(code = 500, message = "Internal Server Error", response = ApiError.class)
     })
     public ResponseEntity<LogRequest> findById(@PathVariable("id") Long id) throws NotFoundException {
         log.info("findById id={}", id);
