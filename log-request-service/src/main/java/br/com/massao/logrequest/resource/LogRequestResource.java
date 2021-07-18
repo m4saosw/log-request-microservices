@@ -1,5 +1,6 @@
 package br.com.massao.logrequest.resource;
 
+import br.com.massao.logrequest.converter.LogRequestModelConverter;
 import br.com.massao.logrequest.dto.LogRequest;
 import br.com.massao.logrequest.dto.LogRequestForm;
 import br.com.massao.logrequest.exception.ApiError;
@@ -20,7 +21,6 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.net.URI;
-import java.time.LocalDateTime;
 
 /**
  * Log Request Resources Controller
@@ -32,6 +32,8 @@ public class LogRequestResource {
     @Autowired
     private LogRequestService service;
 
+    @Autowired
+    private LogRequestModelConverter converter;
 
     /**
      * List Logs
@@ -84,20 +86,22 @@ public class LogRequestResource {
     @ApiOperation(value = "Create a log request")
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Created"),
-            @ApiResponse(code = 400, message = "Bad Request"),
-            @ApiResponse(code = 500, message = "Internal Server Error")
+            @ApiResponse(code = 400, message = "Bad Request", response = ApiError.class),
+            @ApiResponse(code = 500, message = "Internal Server Error", response = ApiError.class)
     })
     public ResponseEntity<Void> create(@Valid @RequestBody LogRequestForm form) {
         log.info("create form={}", form);
 
-        LogRequestModel log1 = new LogRequestModel(1L, LocalDateTime.now(), "ip1", "request", (short) 200, "userAgent");
+        LogRequestModel model = converter.modelFrom(form);
+        LogRequestModel entity = service.save(model);
 
         // nota: ResponseEntity retornando link do novo recurso no cabecalho da requisicao
         URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
-                .buildAndExpand(log1.getId()).toUri();
+                .buildAndExpand(entity.getId()).toUri();
 
         return ResponseEntity.created(location).build();
     }
+
 
     /**
      * Update a Log

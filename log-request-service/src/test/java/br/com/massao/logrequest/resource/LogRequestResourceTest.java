@@ -1,6 +1,8 @@
 package br.com.massao.logrequest.resource;
 
+import br.com.massao.logrequest.converter.LogRequestModelConverter;
 import br.com.massao.logrequest.dto.LogRequest;
+import br.com.massao.logrequest.dto.LogRequestForm;
 import br.com.massao.logrequest.model.LogRequestModel;
 import br.com.massao.logrequest.service.LogRequestService;
 import br.com.massao.logrequest.util.DateFormatterUtil;
@@ -27,7 +29,7 @@ import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@WebMvcTest(LogRequestResource.class)  //  Auto-configure the Spring MVC infrastructure for unit tests
+@WebMvcTest({LogRequestResource.class, LogRequestModelConverter.class})  //  Auto-configure the Spring MVC infrastructure for unit tests
 class LogRequestResourceTest {
     @Autowired
     private MockMvc mvc;
@@ -107,12 +109,14 @@ class LogRequestResourceTest {
     @Test
     void givenLogWhenCreateLogThenReturnLocationWithStatus201() throws Exception {
         // given
-        LogRequest log = new LogRequest(1L, LocalDateTime.now(), "ip1", "request", (short) 200, "userAgent");
+        LogRequestForm form = new LogRequestForm(LocalDateTime.now(), "ip1", "request", (short) 200, "userAgent");
+        LogRequestModel model = new LogRequestModel(1L, LocalDateTime.now(), "ip1", "request", (short) 200, "userAgent");
 
         // when
+        given(service.save(any(LogRequestModel.class))).willReturn(model);
 
         // then
-        String jsonObject = asJsonString(log);
+        String jsonObject = asJsonString(form);
 
         mvc.perform(post("/v1/log-requests")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -120,6 +124,42 @@ class LogRequestResourceTest {
                 .andExpect(status().isCreated())
                 .andExpect(content().string(""))
                 .andExpect(header().exists("location"));
+    }
+
+
+    @Test
+    void givenInvalidBodyWhenCreateLogThenReturnStatus400() throws Exception {
+        // given
+        LogRequestModel model = null;
+
+        // when
+        given(service.save(any(LogRequestModel.class))).willReturn(model);
+
+        // then
+        String jsonObject = asJsonString(model);
+
+        mvc.perform(post("/v1/log-requests")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(jsonObject))
+                .andExpect(status().isBadRequest());
+    }
+
+
+    @Test
+    void givenInvalidLogWhenCreateLogThenReturnStatus400() throws Exception {
+        // given
+        LogRequestModel model = LogRequestModel.builder().build();
+
+        // when
+        given(service.save(any(LogRequestModel.class))).willReturn(model);
+
+        // then
+        String jsonObject = asJsonString(model);
+
+        mvc.perform(post("/v1/log-requests")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(jsonObject))
+                .andExpect(status().isBadRequest());
     }
 
 
