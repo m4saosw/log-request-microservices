@@ -1,7 +1,9 @@
 package br.com.massao.logrequest.model;
 
+import br.com.massao.logrequest.util.CustomDateSerializer;
 import br.com.massao.logrequest.util.DateFormatterUtil;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -13,6 +15,9 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
+/**
+ * Log Request persistence model
+ */
 @Entity
 @Table(name = "logrequest")
 @AllArgsConstructor
@@ -27,7 +32,8 @@ public class LogRequestModel {
 
     @Column(name = "date")
     @NotNull
-    @JsonFormat(pattern = DateFormatterUtil.DATE_PATTERN, timezone = "Brazil/East")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DateFormatterUtil.DATE_PATTERN, timezone = "Brazil/East")
+    @JsonSerialize(using = CustomDateSerializer.class)
     private LocalDateTime date;
 
     @Column(name = "ip")

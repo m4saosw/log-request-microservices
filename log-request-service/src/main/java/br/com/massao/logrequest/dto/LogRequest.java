@@ -1,10 +1,12 @@
 package br.com.massao.logrequest.dto;
 
 import br.com.massao.logrequest.model.LogRequestModel;
+import br.com.massao.logrequest.util.CustomDateSerializer;
 import br.com.massao.logrequest.util.DateFormatterUtil;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.*;
 
 import javax.validation.constraints.Min;
@@ -12,6 +14,9 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
+/**
+ * Log Request output data
+ */
 @NoArgsConstructor // Used by Jackson
 @AllArgsConstructor
 @Getter
@@ -23,7 +28,8 @@ public class LogRequest {
     private Long id;
 
     @JsonProperty("date")
-    @JsonFormat(pattern = DateFormatterUtil.DATE_PATTERN)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DateFormatterUtil.DATE_PATTERN)
+    @JsonSerialize(using = CustomDateSerializer.class)
     @NotNull
     private LocalDateTime date;
 
