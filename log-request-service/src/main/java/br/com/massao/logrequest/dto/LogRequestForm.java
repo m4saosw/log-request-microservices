@@ -32,17 +32,21 @@ public class LogRequestForm {
 
     @JsonProperty("ip")
     @NotEmpty
+    @NotNull
     private String ip;
 
     @JsonProperty("request")
     @NotEmpty
+    @NotNull
     private String request;
 
     @JsonProperty("status")
     @Min(0)
+    @NotNull
     private short status;
 
     @JsonProperty("userAgent")
     @NotEmpty
+    @NotNull
     private String userAgent;
 }
