@@ -2,19 +2,28 @@ package br.com.massao.logrequest.resource;
 
 import br.com.massao.logrequest.dto.LogRequest;
 import br.com.massao.logrequest.model.LogRequestModel;
+import br.com.massao.logrequest.service.LogRequestService;
 import br.com.massao.logrequest.util.DateFormatterUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.time.LocalDateTime;
+import java.util.Arrays;
+import java.util.List;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.core.Is.is;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -22,6 +31,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 class LogRequestResourceTest {
     @Autowired
     private MockMvc mvc;
+
+    @MockBean
+    private LogRequestService service;
 
     @BeforeEach
     void setUp() {
@@ -36,11 +48,14 @@ class LogRequestResourceTest {
     void givenLogsWhenGetLogsThenReturnJsonLogsWithStatus200() throws Exception {
         // given
         LocalDateTime localDateTime = DateFormatterUtil.localDateTimeFrom("2021-07-17 01:01:01.001");
-        LogRequest log1 = new LogRequest(1L, localDateTime, "ip1", "request", (short) 200, "userAgent");
-        LogRequest log2 = new LogRequest(2L, localDateTime, "ip2", "request", (short) 200, "userAgent");
+        LogRequestModel log1 = new LogRequestModel(1L, localDateTime, "ip1", "request", (short) 200, "userAgent");
+        LogRequestModel log2 = new LogRequestModel(2L, localDateTime, "ip2", "request", (short) 200, "userAgent");
+
+        List<LogRequestModel> model = Arrays.asList(log1, log2);
+        Page<LogRequestModel> pageModel = new PageImpl<>(model);
 
         // when
-
+        given(service.list(any(Pageable.class))).willReturn(pageModel);
 
         // then
         mvc.perform(get("/v1/log-requests")

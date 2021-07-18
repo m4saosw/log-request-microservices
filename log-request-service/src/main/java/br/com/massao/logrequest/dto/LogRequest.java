@@ -8,6 +8,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.*;
+import org.springframework.data.domain.Page;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
@@ -59,4 +60,13 @@ public class LogRequest {
         this.userAgent = model.getUserAgent();
     }
 
+    /**
+     * Convert from Model to Dto with pagination
+     *
+     * @param model
+     * @return
+     */
+    public Page<LogRequest> listLogRequestFrom(Page<LogRequestModel> model) {
+        return model.map(LogRequest::new);
+    }
 }

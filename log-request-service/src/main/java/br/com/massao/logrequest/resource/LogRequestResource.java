@@ -3,11 +3,13 @@ package br.com.massao.logrequest.resource;
 import br.com.massao.logrequest.dto.LogRequest;
 import br.com.massao.logrequest.dto.LogRequestForm;
 import br.com.massao.logrequest.model.LogRequestModel;
+import br.com.massao.logrequest.service.LogRequestService;
 import br.com.massao.logrequest.util.DateFormatterUtil;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -29,6 +31,9 @@ import java.util.List;
 @RestController
 @RequestMapping("v1/log-requests")
 public class LogRequestResource {
+    @Autowired
+    private LogRequestService service;
+
 
     /**
      * List Logs
@@ -44,15 +49,9 @@ public class LogRequestResource {
     public ResponseEntity<Page<LogRequest>> list(@PageableDefault(size = 3, sort = "id") Pageable page) {
 
         log.info("list pageable=<{}>", page);
-        LocalDateTime localDateTime = DateFormatterUtil.localDateTimeFrom("2021-07-17 01:01:01.001");
-        LogRequest log1 = new LogRequest(1L, localDateTime, "ip1", "request", (short) 200, "userAgent");
-        LogRequest log2 = new LogRequest(2L, localDateTime, "ip2", "request", (short) 200, "userAgent");
-        List<LogRequest> list = Arrays.asList(log1, log2);
 
-
-        Page<LogRequest> listResult = new PageImpl(list);
-
-        return ResponseEntity.ok(listResult);
+        Page<LogRequest> resultList = new LogRequest().listLogRequestFrom(service.list(page));
+        return ResponseEntity.ok(resultList);
     }
 
 
