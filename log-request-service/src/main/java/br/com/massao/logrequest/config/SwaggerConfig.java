@@ -17,7 +17,7 @@ import java.util.Collections;
 
 @Configuration
 @EnableSwagger2
-@Import({SpringDataRestConfiguration.class, BeanValidatorPluginsConfiguration.class})
+@Import({BeanValidatorPluginsConfiguration.class})
 public class SwaggerConfig {
 
 
