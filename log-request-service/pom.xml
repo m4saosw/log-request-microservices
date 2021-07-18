@@ -9,11 +9,11 @@
         <version>2.4.1</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>br.com.massao.api</groupId>
-    <artifactId>LogRequest</artifactId>
+    <groupId>br.com.massao.logrequest</groupId>
+    <artifactId>log-request-service</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>LogRequest</name>
-    <description>Demo project for Spring Boot</description>
+    <name>LogRequestService</name>
+    <description>Log Request Service</description>
     <properties>
         <java.version>1.8</java.version>
     </properties>
