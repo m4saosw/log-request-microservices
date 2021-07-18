@@ -86,9 +86,10 @@ class LogRequestResourceTest {
     @Test
     void givenLogsWhenFindByIdLogThenReturnJsonLogWithStatus200() throws Exception {
         // given
-        LogRequest log1 = new LogRequest(1L, LocalDateTime.now(), "ip1", "request", (short) 200, "userAgent");
+        LogRequestModel log1 = new LogRequestModel(1L, LocalDateTime.now(), "ip1", "request", (short) 200, "userAgent");
 
         // when
+        given(service.findById(log1.getId())).willReturn(log1);
 
 
         // then

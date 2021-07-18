@@ -2,16 +2,15 @@ package br.com.massao.logrequest.resource;
 
 import br.com.massao.logrequest.dto.LogRequest;
 import br.com.massao.logrequest.dto.LogRequestForm;
+import br.com.massao.logrequest.exception.NotFoundException;
 import br.com.massao.logrequest.model.LogRequestModel;
 import br.com.massao.logrequest.service.LogRequestService;
-import br.com.massao.logrequest.util.DateFormatterUtil;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
@@ -21,8 +20,6 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import javax.validation.Valid;
 import java.net.URI;
 import java.time.LocalDateTime;
-import java.util.Arrays;
-import java.util.List;
 
 /**
  * Log Request Resources Controller
@@ -68,10 +65,10 @@ public class LogRequestResource {
             @ApiResponse(code = 400, message = "Bad Request"),
             @ApiResponse(code = 500, message = "Internal Server Error")
     })
-    public ResponseEntity<LogRequest> findById(@PathVariable("id") Long id) {
+    public ResponseEntity<LogRequest> findById(@PathVariable("id") Long id) throws NotFoundException {
         log.info("findById id={}", id);
 
-        LogRequestModel model = new LogRequestModel(1L, LocalDateTime.now(), "ip1", "request", (short) 200, "userAgent");
+        LogRequestModel model = service.findById(id);
         return ResponseEntity.ok(new LogRequest(model));
     }
 
