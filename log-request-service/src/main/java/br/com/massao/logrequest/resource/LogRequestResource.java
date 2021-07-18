@@ -4,6 +4,9 @@ import br.com.massao.logrequest.dto.LogRequest;
 import br.com.massao.logrequest.dto.LogRequestForm;
 import br.com.massao.logrequest.model.LogRequestModel;
 import br.com.massao.logrequest.util.DateFormatterUtil;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -29,10 +32,15 @@ public class LogRequestResource {
 
     /**
      * List Logs
+     *
      * @param page
      * @return
      */
     @GetMapping
+    @ApiOperation(value = "List all logs")
+    @ApiResponses(value = {
+            @ApiResponse(code = 500, message = "Internal Server Error")
+    })
     public ResponseEntity<Page<LogRequest>> list(@PageableDefault(size = 3, sort = "id") Pageable page) {
 
         log.info("list pageable=<{}>", page);
@@ -50,10 +58,17 @@ public class LogRequestResource {
 
     /**
      * Find a Log by id
+     *
      * @param id
      * @return
      */
     @GetMapping("/{id}")
+    @ApiOperation(value = "Find a log request by id")
+    @ApiResponses(value = {
+            @ApiResponse(code = 404, message = "Not Found"),
+            @ApiResponse(code = 400, message = "Bad Request"),
+            @ApiResponse(code = 500, message = "Internal Server Error")
+    })
     public ResponseEntity<LogRequest> findById(@PathVariable("id") Long id) {
         log.info("findById id={}", id);
 
@@ -64,10 +79,17 @@ public class LogRequestResource {
 
     /**
      * Create a Log
+     *
      * @param form
      * @return
      */
     @PostMapping
+    @ApiOperation(value = "Create a log request")
+    @ApiResponses(value = {
+            @ApiResponse(code = 201, message = "Created"),
+            @ApiResponse(code = 400, message = "Bad Request"),
+            @ApiResponse(code = 500, message = "Internal Server Error")
+    })
     public ResponseEntity<Void> create(@Valid @RequestBody LogRequestForm form) {
         log.info("create form={}", form);
 
@@ -82,11 +104,19 @@ public class LogRequestResource {
 
     /**
      * Update a Log
+     *
      * @param id
      * @param form
      * @return
      */
     @PutMapping("/{id}")
+    @ApiOperation(value = "Update a log request")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successfully Updated"),
+            @ApiResponse(code = 400, message = "Bad Request"),
+            @ApiResponse(code = 404, message = "Not Found"),
+            @ApiResponse(code = 500, message = "Internal Server Error")
+    })
     public ResponseEntity<LogRequest> update(@PathVariable("id") Long id, @Valid @RequestBody LogRequestForm form) {
         log.info("modify id={} form={}", id, form);
 
