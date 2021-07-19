@@ -35,4 +35,14 @@ public interface LogRequestService {
      * @return
      */
     LogRequestModel save(LogRequestModel model);
+
+
+    /**
+     * Update an existing log
+     * @param id
+     * @param newLog
+     * @return
+     * @throws NotFoundException
+     */
+    LogRequestModel update(Long id, LogRequestModel newLog) throws NotFoundException;
 }

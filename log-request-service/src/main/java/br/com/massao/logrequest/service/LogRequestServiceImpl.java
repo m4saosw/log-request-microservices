@@ -47,12 +47,37 @@ public class LogRequestServiceImpl implements LogRequestService {
 
     /**
      * Save a new log
+     *
      * @param model
      * @return
      */
+    @Override
     public LogRequestModel save(LogRequestModel model) {
         log.debug("save model={}", model);
 
         return repository.save(model);
+    }
+
+
+    /**
+     * Update an existing log
+     *
+     * @param id
+     * @param newLog
+     * @return
+     * @throws NotFoundException
+     */
+    public LogRequestModel update(Long id, LogRequestModel newLog) throws NotFoundException {
+        log.debug("update model={} {}", id, newLog);
+
+        return repository.findById(id).map(model -> {
+            model.setDate(newLog.getDate());
+            model.setRequest(newLog.getRequest());
+            model.setIp(newLog.getIp());
+            model.setStatus(newLog.getStatus());
+            model.setUserAgent(newLog.getUserAgent());
+
+            return repository.save(model);
+        }).orElseThrow(() -> new NotFoundException());
     }
 }

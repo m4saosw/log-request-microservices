@@ -112,17 +112,19 @@ public class LogRequestResource {
      */
     @PutMapping("/{id}")
     @ApiOperation(value = "Update a log request")
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Successfully Updated"),
-            @ApiResponse(code = 400, message = "Bad Request"),
-            @ApiResponse(code = 404, message = "Not Found"),
-            @ApiResponse(code = 500, message = "Internal Server Error")
+    @ApiResponses(value={
+            @ApiResponse(code=200, message="Successfully Updated"),
+            @ApiResponse(code=400, message="Bad Request", response = ApiError.class),
+            @ApiResponse(code=404, message="Not Found"),
+            @ApiResponse(code=500, message="Internal Server Error", response = ApiError.class)
     })
-    public ResponseEntity<LogRequest> update(@PathVariable("id") Long id, @Valid @RequestBody LogRequestForm form) {
+    public ResponseEntity<LogRequest> update(@PathVariable("id") Long id, @Valid @RequestBody LogRequestForm form) throws NotFoundException {
         log.info("modify id={} form={}", id, form);
 
-        LogRequestModel model = new LogRequestModel(1L, form.getDate(), form.getIp(), form.getRequest(), form.getStatus(), form.getUserAgent());
-        return ResponseEntity.ok(new LogRequest(model));
+        LogRequestModel model = converter.modelFrom(form);
+        LogRequestModel modified = service.update(id, model);
+
+        return ResponseEntity.ok().body(new LogRequest(modified));
     }
 
 }

@@ -3,6 +3,7 @@ package br.com.massao.logrequest.resource;
 import br.com.massao.logrequest.converter.LogRequestModelConverter;
 import br.com.massao.logrequest.dto.LogRequest;
 import br.com.massao.logrequest.dto.LogRequestForm;
+import br.com.massao.logrequest.exception.NotFoundException;
 import br.com.massao.logrequest.model.LogRequestModel;
 import br.com.massao.logrequest.service.LogRequestService;
 import br.com.massao.logrequest.util.DateFormatterUtil;
@@ -25,6 +26,7 @@ import java.util.List;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.core.Is.is;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -184,6 +186,7 @@ class LogRequestResourceTest {
         LogRequest log = new LogRequest(1L, localDateTime, "ip1", "request", (short) 200, "userAgent");
 
         // when
+        given(service.update(anyLong(), any())).willReturn(model);
 
         // then
         String jsonObject = asJsonString(new LogRequest(model));
@@ -197,5 +200,23 @@ class LogRequestResourceTest {
                 .andExpect(jsonPath("$.request").value(log.getRequest()))
                 .andExpect(jsonPath("$.status").value(Integer.valueOf(log.getStatus())))
                 .andExpect(jsonPath("$.userAgent").value(log.getUserAgent()));
+    }
+
+    @Test
+    void givenNotFoundWhenUpdateLogThenReturnStatus404() throws Exception {
+        // given
+        LocalDateTime localDateTime = DateFormatterUtil.localDateTimeFrom("2021-07-17 01:01:01.001");
+        LogRequestModel person1 = new LogRequestModel(1L, localDateTime, "ip1", "request", (short) 200, "userAgent");
+
+        // when
+        given(service.update(anyLong(), any())).willThrow(NotFoundException.class);
+
+        // then
+        String jsonObject = asJsonString(person1);
+        mvc.perform(put("/v1/log-requests/{id}", 1L)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(jsonObject))
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$").doesNotExist());
     }
 }
