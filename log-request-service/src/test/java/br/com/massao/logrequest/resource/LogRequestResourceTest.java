@@ -5,6 +5,7 @@ import br.com.massao.logrequest.dto.LogRequest;
 import br.com.massao.logrequest.dto.LogRequestForm;
 import br.com.massao.logrequest.exception.NotFoundException;
 import br.com.massao.logrequest.model.LogRequestModel;
+import br.com.massao.logrequest.repository.query.LogRequestSpecifications;
 import br.com.massao.logrequest.service.LogRequestService;
 import br.com.massao.logrequest.util.DateFormatterUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -16,6 +17,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -25,8 +27,7 @@ import java.util.List;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.core.Is.is;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -218,5 +219,99 @@ class LogRequestResourceTest {
                 .content(jsonObject))
                 .andExpect(status().isNotFound())
                 .andExpect(jsonPath("$").doesNotExist());
+    }
+
+
+    /**
+     * SEARCH TEST CASES
+     */
+
+    @Test
+    void givenQueriesStartDateWhenGetSearchLogsThenReturnJsonLogsWithStatus200() throws Exception {
+        // given
+        String dateStr = "2021-07-17 01:01:01.001";
+        String dateStr2 = "2021-07-17 01:01:01";
+        LocalDateTime localDateTime = DateFormatterUtil.localDateTimeFrom(dateStr);
+        LogRequestModel log1 = new LogRequestModel(1L, localDateTime, "ip1", "request", (short) 200, "userAgent");
+
+        List<LogRequestModel> model = Arrays.asList(log1);
+        Page<LogRequestModel> pageModel = new PageImpl<>(model);
+
+        final LogRequestParams params = new LogRequestParams(dateStr2, null, null, null, null, null);
+
+        // when
+        given(service.searchByFilters(any(Specification.class), any(Pageable.class))).willReturn(pageModel);
+
+        // then
+        mvc.perform(get("/v1/log-requests/search")
+                .contentType(MediaType.APPLICATION_JSON)
+                .param("startDate",params.getStartDate().format(DateFormatterUtil.FORMATTER_QUERY))
+        )
+                .andExpect(status().isOk())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$['content']", hasSize(1)))
+                .andExpect(jsonPath("$.last", is(true))) // com paginacao
+                .andExpect(jsonPath("$.totalPages", is(1))) // com paginacao
+                .andExpect(jsonPath("$.content[0].id", is(log1.getId().intValue())))
+                .andExpect(jsonPath("$.content[0].date").value(log1.getDate().format(DateFormatterUtil.FORMATTER)))
+                .andExpect(jsonPath("$.content[0].request").value(log1.getRequest()))
+                .andExpect(jsonPath("$.content[0].status").value(Integer.valueOf(log1.getStatus())))
+                .andExpect(jsonPath("$.content[0].userAgent").value(log1.getUserAgent()));
+    }
+
+
+    @Test
+    void givenQueriesAllWhenGetSearchLogsThenReturnJsonLogsWithStatus200() throws Exception {
+        // given
+        String dateStr = "2021-07-17 01:01:01.001";
+        String dateStr2 = "2021-07-17 01:01:01";
+        LocalDateTime localDateTime = DateFormatterUtil.localDateTimeFrom(dateStr);
+        LogRequestModel log1 = new LogRequestModel(1L, localDateTime, "ip1", "request", (short) 200, "userAgent");
+
+        List<LogRequestModel> model = Arrays.asList(log1);
+        Page<LogRequestModel> pageModel = new PageImpl<>(model);
+
+        final LogRequestParams params = new LogRequestParams(dateStr2, dateStr2, log1.getIp(), log1.getRequest(), Short.toString(log1.getStatus()), log1.getUserAgent());
+
+        // when
+        given(service.searchByFilters(any(Specification.class), any(Pageable.class))).willReturn(pageModel);
+
+        // then
+        mvc.perform(get("/v1/log-requests/search")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .param("startDate",params.getStartDate().format(DateFormatterUtil.FORMATTER_QUERY))
+                .param("endDate",params.getStartDate().format(DateFormatterUtil.FORMATTER_QUERY))
+                .param("ip",params.getIp())
+                .param("request", params.getRequest())
+                .param("status", Short.toString(params.getStatus()))
+                .param("userAgent",params.getUserAgent()))
+                .andExpect(status().isOk())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$['content']", hasSize(1)))
+                .andExpect(jsonPath("$.last", is(true))) // com paginacao
+                .andExpect(jsonPath("$.totalPages", is(1))) // com paginacao
+                .andExpect(jsonPath("$.content[0].id", is(log1.getId().intValue())))
+                .andExpect(jsonPath("$.content[0].date").value(log1.getDate().format(DateFormatterUtil.FORMATTER)))
+                .andExpect(jsonPath("$.content[0].request").value(log1.getRequest()))
+                .andExpect(jsonPath("$.content[0].status").value(Integer.valueOf(log1.getStatus())))
+                .andExpect(jsonPath("$.content[0].userAgent").value(log1.getUserAgent()));
+    }
+
+
+    @Test
+    void givenNoQueriesWhenGetSearchLogsThenReturnJsonLogsWithStatus400() throws Exception {
+        // given
+        Page<LogRequestModel> pageModel = new PageImpl<>(Arrays.asList());
+
+        final LogRequestParams params = new LogRequestParams(null, null, null, null, null, null);
+        final Specification<LogRequestModel> specification = new LogRequestSpecifications().fromParams(params);
+
+        // when
+        given(service.searchByFilters(eq(specification), any(Pageable.class))).willReturn(pageModel);
+
+        // then
+        mvc.perform(get("/v1/log-requests/search")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest());
     }
 }

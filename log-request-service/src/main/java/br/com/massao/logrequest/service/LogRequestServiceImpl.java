@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 @Slf4j
@@ -67,6 +68,7 @@ public class LogRequestServiceImpl implements LogRequestService {
      * @return
      * @throws NotFoundException
      */
+    @Override
     public LogRequestModel update(Long id, LogRequestModel newLog) throws NotFoundException {
         log.debug("update model={} {}", id, newLog);
 
@@ -79,5 +81,19 @@ public class LogRequestServiceImpl implements LogRequestService {
 
             return repository.save(model);
         }).orElseThrow(() -> new NotFoundException());
+    }
+
+
+    /**
+     * Search logs by filters
+     *
+     * @param spec
+     * @param pageable
+     * @return
+     */
+    @Override
+    public Page<LogRequestModel> searchByFilters(Specification<LogRequestModel> spec, Pageable pageable) {
+        log.debug("list pageable with filters");
+        return repository.findAll(spec, pageable);
     }
 }

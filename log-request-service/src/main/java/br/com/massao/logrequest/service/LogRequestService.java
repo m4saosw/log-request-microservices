@@ -4,6 +4,7 @@ import br.com.massao.logrequest.exception.NotFoundException;
 import br.com.massao.logrequest.model.LogRequestModel;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -39,10 +40,21 @@ public interface LogRequestService {
 
     /**
      * Update an existing log
+     *
      * @param id
      * @param newLog
      * @return
      * @throws NotFoundException
      */
     LogRequestModel update(Long id, LogRequestModel newLog) throws NotFoundException;
+
+
+    /**
+     * Search logs by filters
+     *
+     * @param spec
+     * @param pageable
+     * @return
+     */
+    Page<LogRequestModel> searchByFilters(Specification<LogRequestModel> spec, Pageable pageable);
 }
