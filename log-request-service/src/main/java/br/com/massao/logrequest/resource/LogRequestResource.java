@@ -17,6 +17,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -91,6 +92,7 @@ public class LogRequestResource {
             @ApiResponse(code = 400, message = "Bad Request", response = ApiError.class),
             @ApiResponse(code = 500, message = "Internal Server Error", response = ApiError.class)
     })
+    @ResponseStatus(HttpStatus.CREATED) // This removes http 200 on Swagger
     public ResponseEntity<Void> create(@Valid @RequestBody LogRequestForm form) {
         log.info("create form={}", form);
 
