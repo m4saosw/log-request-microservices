@@ -34,6 +34,12 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @WebMvcTest({LogRequestResource.class, LogRequestModelConverter.class})  //  Auto-configure the Spring MVC infrastructure for unit tests
 class LogRequestResourceTest {
+    public static final String URL_LIST = "/v1/log-requests";
+    public static final String URL_FIND_BY_ID = "/v1/log-requests/{id}";
+    public static final String URL_ADD = "/v1/log-requests";
+    public static final String URL_UPDATE = "/v1/log-requests/{id}";
+    public static final String URL_SEARCH = "/v1/log-requests/search";
+
     @Autowired
     private MockMvc mvc;
 
@@ -63,7 +69,7 @@ class LogRequestResourceTest {
         given(service.list(any(Pageable.class))).willReturn(pageModel);
 
         // then
-        mvc.perform(get("/v1/log-requests")
+        mvc.perform(get(URL_LIST)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
@@ -98,7 +104,7 @@ class LogRequestResourceTest {
 
 
         // then
-        mvc.perform(get("/v1/log-requests/{id}", log1.getId())
+        mvc.perform(get(URL_FIND_BY_ID, log1.getId())
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
@@ -121,7 +127,7 @@ class LogRequestResourceTest {
         // then
         String jsonObject = asJsonString(form);
 
-        mvc.perform(post("/v1/log-requests")
+        mvc.perform(post(URL_ADD)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(jsonObject))
                 .andExpect(status().isCreated())
@@ -141,7 +147,7 @@ class LogRequestResourceTest {
         // then
         String jsonObject = asJsonString(model);
 
-        mvc.perform(post("/v1/log-requests")
+        mvc.perform(post(URL_ADD)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(jsonObject))
                 .andExpect(status().isBadRequest());
@@ -159,7 +165,7 @@ class LogRequestResourceTest {
         // then
         String jsonObject = asJsonString(model);
 
-        mvc.perform(post("/v1/log-requests")
+        mvc.perform(post(URL_ADD)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(jsonObject))
                 .andExpect(status().isBadRequest());
@@ -191,7 +197,7 @@ class LogRequestResourceTest {
 
         // then
         String jsonObject = asJsonString(new LogRequest(model));
-        mvc.perform(put("/v1/log-requests/{id}", log.getId())
+        mvc.perform(put(URL_UPDATE, log.getId())
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(jsonObject))
                 .andExpect(status().isOk())
@@ -214,7 +220,7 @@ class LogRequestResourceTest {
 
         // then
         String jsonObject = asJsonString(person1);
-        mvc.perform(put("/v1/log-requests/{id}", 1L)
+        mvc.perform(put(URL_UPDATE, 1L)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(jsonObject))
                 .andExpect(status().isNotFound())
@@ -243,9 +249,9 @@ class LogRequestResourceTest {
         given(service.searchByFilters(any(Specification.class), any(Pageable.class))).willReturn(pageModel);
 
         // then
-        mvc.perform(get("/v1/log-requests/search")
+        mvc.perform(get(URL_SEARCH)
                 .contentType(MediaType.APPLICATION_JSON)
-                .param("startDate",params.getStartDate().format(DateFormatterUtil.FORMATTER_QUERY))
+                .param("startDate", params.getStartDate().format(DateFormatterUtil.FORMATTER_QUERY))
         )
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
@@ -277,14 +283,14 @@ class LogRequestResourceTest {
         given(service.searchByFilters(any(Specification.class), any(Pageable.class))).willReturn(pageModel);
 
         // then
-        mvc.perform(get("/v1/log-requests/search")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .param("startDate",params.getStartDate().format(DateFormatterUtil.FORMATTER_QUERY))
-                .param("endDate",params.getStartDate().format(DateFormatterUtil.FORMATTER_QUERY))
-                .param("ip",params.getIp())
+        mvc.perform(get(URL_SEARCH)
+                .contentType(MediaType.APPLICATION_JSON)
+                .param("startDate", params.getStartDate().format(DateFormatterUtil.FORMATTER_QUERY))
+                .param("endDate", params.getStartDate().format(DateFormatterUtil.FORMATTER_QUERY))
+                .param("ip", params.getIp())
                 .param("request", params.getRequest())
                 .param("status", Short.toString(params.getStatus()))
-                .param("userAgent",params.getUserAgent()))
+                .param("userAgent", params.getUserAgent()))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$['content']", hasSize(1)))
@@ -310,7 +316,7 @@ class LogRequestResourceTest {
         given(service.searchByFilters(eq(specification), any(Pageable.class))).willReturn(pageModel);
 
         // then
-        mvc.perform(get("/v1/log-requests/search")
+        mvc.perform(get(URL_SEARCH)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isBadRequest());
     }
