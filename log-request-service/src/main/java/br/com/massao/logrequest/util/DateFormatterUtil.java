@@ -1,7 +1,9 @@
 package br.com.massao.logrequest.util;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
 
 public class DateFormatterUtil {
     public static final String DATE_PATTERN = "yyyy-MM-dd HH:mm:ss.SSS";
@@ -11,5 +13,13 @@ public class DateFormatterUtil {
 
     public static LocalDateTime localDateTimeFrom(String str) {
         return LocalDateTime.parse(str, DateFormatterUtil.FORMATTER);
+    }
+
+    public static LocalDateTime localDateTime(Date date) {
+        if (date == null) return null;
+
+        return date.toInstant()
+                .atZone(ZoneId.systemDefault())
+                .toLocalDateTime();
     }
 }

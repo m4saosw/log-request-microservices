@@ -1,6 +1,11 @@
 package br.com.massao.logrequest.exception;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.batch.core.JobParametersInvalidException;
+import org.springframework.batch.core.launch.NoSuchJobException;
+import org.springframework.batch.core.repository.JobExecutionAlreadyRunningException;
+import org.springframework.batch.core.repository.JobInstanceAlreadyCompleteException;
+import org.springframework.batch.core.repository.JobRestartException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
@@ -20,6 +25,7 @@ import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import javax.validation.ConstraintViolationException;
 import java.time.DateTimeException;
 import java.util.ArrayList;
 import java.util.List;
@@ -135,6 +141,43 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
         });
 
         return buildResponseEntity(new ApiError(HttpStatus.BAD_REQUEST, message, ex, apiFieldErrors));
+    }
+
+
+
+    @ExceptionHandler(ConstraintViolationException.class)
+    public ResponseEntity<Object> handleConstraintViolation(ConstraintViolationException ex) {
+        String message = "Invalid content";
+        log.error("handleConstraintViolation exception={}", ex.getMessage());
+
+        return buildResponseEntity(new ApiError(HttpStatus.BAD_REQUEST, message, ex));
+    }
+
+    @ExceptionHandler(NoSuchJobException.class)
+    public ResponseEntity<Object> handleNoSuchJob(NoSuchJobException ex) {
+        String message = "Invalid job id";
+        log.error("handleNoSuchJob exception={}", ex.getMessage());
+
+        return ResponseEntity.notFound().build();
+    }
+
+
+
+    @ExceptionHandler(JobParametersInvalidException.class)
+    public ResponseEntity<Object> handleJobParametersInvalid(JobParametersInvalidException ex) {
+        String message = "Invalid parameters";
+        log.error("handleJobParametersInvalid exception={}", ex.getMessage());
+
+        return buildResponseEntity(new ApiError(HttpStatus.BAD_REQUEST, message, ex));
+    }
+
+
+    @ExceptionHandler({JobExecutionAlreadyRunningException.class, JobRestartException.class, JobInstanceAlreadyCompleteException.class})
+    public ResponseEntity<Object> handleBatch1(Exception ex) {
+        String message = "Internal service error";
+        log.error("handleBatch1 exception={}", ex.getMessage());
+
+        return buildResponseEntity(new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, message, ex));
     }
 
 
