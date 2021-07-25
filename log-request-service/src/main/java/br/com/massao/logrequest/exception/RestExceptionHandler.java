@@ -45,7 +45,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(NotFoundException.class)
     public ResponseEntity<Object> handleNotFound(NotFoundException ex) {
-        log.error("handleNotFoundException exception={}", ex);
+        log.error("handleNotFoundException exception={}", ex.getMessage());
 
         return ResponseEntity.notFound().build();
     }
