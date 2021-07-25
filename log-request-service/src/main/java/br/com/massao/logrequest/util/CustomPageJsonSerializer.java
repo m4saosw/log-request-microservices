@@ -12,7 +12,7 @@ import java.io.IOException;
  *
  * Baseado em https://github.com/hantsy
  */
-//@JsonComponent
+@JsonComponent
 public class CustomPageJsonSerializer extends JsonSerializer<PageImpl> {
 
     @Override
