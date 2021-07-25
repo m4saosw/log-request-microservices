@@ -49,7 +49,7 @@ public class LogRequestResource {
     @ApiResponses(value = {
             @ApiResponse(code = 500, message = "Internal Server Error", response = ApiError.class)
     })
-    public ResponseEntity<Page<LogRequest>> list(@PageableDefault(size = 3, sort = "id") Pageable page) {
+    public ResponseEntity<Page<LogRequest>> list(@PageableDefault(size = 10, sort = "id") Pageable page) {
 
         log.info("list pageable=<{}>", page);
 
@@ -156,7 +156,7 @@ public class LogRequestResource {
                                                               @RequestParam(value = "request", required = false) String request,
                                                               @RequestParam(value = "status", required = false) String status,
                                                               @RequestParam(value = "userAgent", required = false) String userAgent,
-                                                              @PageableDefault(size = 3, sort = "id") Pageable page) {
+                                                              @PageableDefault(size = 10, sort = "id") Pageable page) {
 
         log.info("list startDate=<{}> endDate=<{}> ip=<{}> request=<{}> status=<{}> userAgent=<{}> pageable=<{}>", startDate, endDate, ip, request, status, userAgent, page);
 
