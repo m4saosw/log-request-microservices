@@ -3,6 +3,7 @@ package br.com.massao.logrequest.service;
 import br.com.massao.logrequest.exception.NotFoundException;
 import br.com.massao.logrequest.model.LogRequestModel;
 import br.com.massao.logrequest.repository.LogRequestRepository;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -24,6 +25,7 @@ public class LogRequestServiceImpl implements LogRequestService {
      * @return
      */
     @Override
+    @HystrixCommand(threadPoolKey = "largeQueryThreadPool")
     public Page<LogRequestModel> list(Pageable pageable) {
         log.debug("list pageable");
 
@@ -39,6 +41,7 @@ public class LogRequestServiceImpl implements LogRequestService {
      * @throws NotFoundException
      */
     @Override
+    @HystrixCommand(threadPoolKey = "queryThreadPool")
     public LogRequestModel findById(Long id) throws NotFoundException {
         log.debug("findById id={}", id);
 
@@ -53,6 +56,7 @@ public class LogRequestServiceImpl implements LogRequestService {
      * @return
      */
     @Override
+    @HystrixCommand(threadPoolKey = "commandThreadPool")
     public LogRequestModel save(LogRequestModel model) {
         log.debug("save model={}", model);
 
@@ -69,6 +73,7 @@ public class LogRequestServiceImpl implements LogRequestService {
      * @throws NotFoundException
      */
     @Override
+    @HystrixCommand(threadPoolKey = "commandThreadPool")
     public LogRequestModel update(Long id, LogRequestModel newLog) throws NotFoundException {
         log.debug("update model={} {}", id, newLog);
 
@@ -92,6 +97,7 @@ public class LogRequestServiceImpl implements LogRequestService {
      * @return
      */
     @Override
+    @HystrixCommand(threadPoolKey = "largeQueryThreadPool")
     public Page<LogRequestModel> searchByFilters(Specification<LogRequestModel> spec, Pageable pageable) {
         log.debug("list pageable with filters");
         return repository.findAll(spec, pageable);
