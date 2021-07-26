@@ -2,6 +2,7 @@ package br.com.massao.logrequest.service;
 
 import br.com.massao.logrequest.model.LogRequestModel;
 import br.com.massao.logrequest.repository.LogRequestRepository;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.batch.core.*;
 import org.springframework.batch.core.configuration.JobLocator;
@@ -56,6 +57,7 @@ public class LogRequestImportFromFileServiceImpl implements LogRequestImportFrom
      * @return
      */
     @Override
+    @HystrixCommand(threadPoolKey = "commandThreadPool")
     public List<LogRequestModel> saveMany(@Valid List<LogRequestModel> models) {
         log.debug("save many models ={}", models);
 
@@ -79,6 +81,7 @@ public class LogRequestImportFromFileServiceImpl implements LogRequestImportFrom
      * @throws JobParametersInvalidException
      */
     @Override
+    @HystrixCommand(threadPoolKey = "commandThreadPool")
     public JobExecution runBatch(Long now, String fileName) throws JobExecutionAlreadyRunningException, JobRestartException, JobInstanceAlreadyCompleteException, JobParametersInvalidException {
         Map<String, JobParameter> params = new HashMap<>();
         params.put("time", new JobParameter(now));
@@ -96,6 +99,7 @@ public class LogRequestImportFromFileServiceImpl implements LogRequestImportFrom
      * @throws NoSuchJobException
      */
     @Override
+    @HystrixCommand(threadPoolKey = "queryThreadPool")
     public JobExecution jobs(Long jobId) throws NoSuchJobException {
 
         return Optional.ofNullable(explorer.getJobExecution(jobId)).orElseThrow(() -> new NoSuchJobException("Job Id not found"));
