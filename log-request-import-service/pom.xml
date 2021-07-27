@@ -9,7 +9,7 @@
         <version>2.4.1</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>br.com.massao.logrequest</groupId>
+    <groupId>br.com.massao.logrequest.microservices</groupId>
     <artifactId>log-request-import-service</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>LogRequestImportService</name>
@@ -18,6 +18,7 @@
         <java.version>1.8</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <spring-cloud.version>2020.0.0</spring-cloud.version>
     </properties>
     <dependencies>
         <dependency>
@@ -87,6 +88,11 @@
             <artifactId>postgresql</artifactId>
             <scope>runtime</scope>
         </dependency>
+
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+        </dependency>
     </dependencies>
 
     <dependencyManagement>
@@ -94,7 +100,7 @@
             <dependency>
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-dependencies</artifactId>
-                <version>2020.0.0</version>
+                <version>${spring-cloud.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
