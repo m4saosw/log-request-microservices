@@ -1,0 +1,33 @@
+
+server:
+  port: 5555
+
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+      
+management:
+  endpoints:
+    web:
+      exposure:
+        include:
+        - "routes"
+
+# Faz o reencaminhamento dos cabeçalhos especificados, para evitar erro, por exemplo do token, s quando fizer requisições pelo gateway
+zuul:
+  sensitive-headers:
+    - Cookie, Authorization
+    -
+
+
+
+# Necessario para aceitar o limite via gateway
+spring:
+  servlet:
+    multipart:
+      enabled: 'true'
+      max-request-size: 35MB
+      max-file-size: 35MB
