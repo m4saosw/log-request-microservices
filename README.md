@@ -11,3 +11,4 @@ This application consists of some microservices:
 
 - service-registry-eureka-server - Service registry
 
+- config-server - Configuration Server
