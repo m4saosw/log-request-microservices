@@ -21,3 +21,9 @@ Config Server é o servidor de configurações.
 	http://localhost:8888/log-request-service/default	
 	http://localhost:8888/log-request-import-service/default	
 
+### Configurações no ambiente
+	Necessario inserir a pasta de configurações no ambiente:
+
+	C:\log-request-microservices-config-repo
+		log-request-service.properties
+		log-request-import-service.properties
