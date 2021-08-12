@@ -1,6 +1,6 @@
-package br.com.massao.logrequest.service;
+package br.com.massao.logrequest.domain.service;
 
-import br.com.massao.logrequest.util.FilesUtil;
+import br.com.massao.logrequest.application.util.FilesUtil;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

@@ -1,4 +1,4 @@
-package br.com.massao.logrequest.dto;
+package br.com.massao.logrequest.application.dto;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

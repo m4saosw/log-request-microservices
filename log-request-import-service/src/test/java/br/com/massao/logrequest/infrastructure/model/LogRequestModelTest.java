@@ -1,4 +1,4 @@
-package br.com.massao.logrequest.model;
+package br.com.massao.logrequest.infrastructure.model;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

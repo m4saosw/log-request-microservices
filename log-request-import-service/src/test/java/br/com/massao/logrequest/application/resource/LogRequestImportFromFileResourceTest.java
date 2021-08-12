@@ -1,7 +1,7 @@
-package br.com.massao.logrequest.resource;
+package br.com.massao.logrequest.application.resource;
 
-import br.com.massao.logrequest.service.FileStorageService;
-import br.com.massao.logrequest.service.LogRequestImportFromFileService;
+import br.com.massao.logrequest.domain.service.FileStorageService;
+import br.com.massao.logrequest.domain.service.LogRequestImportFromFileService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.batch.core.JobExecution;
