@@ -1,7 +1,7 @@
 package br.com.massao.logrequest.batch;
 
-import br.com.massao.logrequest.dto.LogRequestForm;
-import br.com.massao.logrequest.util.DateFormatterUtil;
+import br.com.massao.logrequest.application.dto.LogRequestForm;
+import br.com.massao.logrequest.application.util.DateFormatterUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.batch.item.file.mapping.FieldSetMapper;
 import org.springframework.batch.item.file.transform.FieldSet;
