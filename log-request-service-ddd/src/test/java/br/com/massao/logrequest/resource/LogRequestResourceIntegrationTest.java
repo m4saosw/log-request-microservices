@@ -1,6 +1,6 @@
 package br.com.massao.logrequest.resource;
 
-import br.com.massao.logrequest.LogRequestServiceApplication;
+import br.com.massao.logrequest.LogRequestServiceApplicationDDD;
 import br.com.massao.logrequest.dto.LogRequest;
 import br.com.massao.logrequest.dto.LogRequestForm;
 import br.com.massao.logrequest.model.LogRequestModel;
@@ -22,7 +22,7 @@ import java.time.LocalDateTime;
 import static org.assertj.core.api.Assertions.assertThat;
 
 
-@SpringBootTest(classes = LogRequestServiceApplication.class)
+@SpringBootTest(classes = LogRequestServiceApplicationDDD.class)
 @AutoConfigureMockMvc
 class LogRequestResourceIntegrationTest {
     @Autowired

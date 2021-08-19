@@ -10,10 +10,10 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>br.com.massao.logrequest.microservices</groupId>
-    <artifactId>log-request-service</artifactId>
+    <artifactId>log-request-service-ddd</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>LogRequestService</name>
-    <description>Log Request Service</description>
+    <name>LogRequestServiceDDD</name>
+    <description>Log Request Service - structured as Domain Driven Design (DDD) and based on Clean Architecture (simplified)</description>
     <properties>
         <java.version>1.8</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

@@ -6,10 +6,10 @@ import org.springframework.cloud.client.circuitbreaker.EnableCircuitBreaker;
 
 @SpringBootApplication
 @EnableCircuitBreaker
-public class LogRequestServiceApplication {
+public class LogRequestServiceApplicationDDD {
 
     public static void main(String[] args) {
-        SpringApplication.run(LogRequestServiceApplication.class, args);
+        SpringApplication.run(LogRequestServiceApplicationDDD.class, args);
     }
 
 }
