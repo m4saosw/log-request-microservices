@@ -1,9 +1,9 @@
 package br.com.massao.logrequest.batch;
 
-import br.com.massao.logrequest.application.converter.LogRequestModelConverter;
-import br.com.massao.logrequest.application.dto.LogRequestForm;
-import br.com.massao.logrequest.infrastructure.model.LogRequestModel;
-import br.com.massao.logrequest.domain.service.LogRequestImportFromFileService;
+import br.com.massao.logrequest.converter.LogRequestModelConverter;
+import br.com.massao.logrequest.dto.LogRequestForm;
+import br.com.massao.logrequest.model.LogRequestModel;
+import br.com.massao.logrequest.service.LogRequestImportFromFileService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.batch.item.ItemWriter;
 import org.springframework.beans.factory.annotation.Autowired;
