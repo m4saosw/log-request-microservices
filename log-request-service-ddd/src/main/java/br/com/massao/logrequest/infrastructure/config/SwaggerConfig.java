@@ -1,4 +1,4 @@
-package br.com.massao.logrequest.config;
+package br.com.massao.logrequest.infrastructure.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
