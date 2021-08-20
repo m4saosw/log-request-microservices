@@ -1,4 +1,4 @@
-package br.com.massao.logrequest.repository.query;
+package br.com.massao.logrequest.infrastructure.repository.query;
 
 import br.com.massao.logrequest.model.LogRequestModel;
 import br.com.massao.logrequest.application.resource.LogRequestParams;

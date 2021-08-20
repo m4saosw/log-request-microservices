@@ -1,4 +1,4 @@
-package br.com.massao.logrequest.repository;
+package br.com.massao.logrequest.infrastructure.repository;
 
 import br.com.massao.logrequest.model.LogRequestModel;
 import org.springframework.data.jpa.repository.JpaRepository;
