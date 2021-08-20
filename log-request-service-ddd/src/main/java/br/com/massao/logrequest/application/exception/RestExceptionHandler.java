@@ -1,5 +1,6 @@
 package br.com.massao.logrequest.application.exception;
 
+import br.com.massao.logrequest.domain.NotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
