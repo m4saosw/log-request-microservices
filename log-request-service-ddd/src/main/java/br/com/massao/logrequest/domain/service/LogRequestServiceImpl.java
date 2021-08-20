@@ -1,4 +1,4 @@
-package br.com.massao.logrequest.service;
+package br.com.massao.logrequest.domain.service;
 
 import br.com.massao.logrequest.application.exception.NotFoundException;
 import br.com.massao.logrequest.infrastructure.model.LogRequestModel;

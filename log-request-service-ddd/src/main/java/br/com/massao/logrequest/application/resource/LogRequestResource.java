@@ -7,7 +7,7 @@ import br.com.massao.logrequest.application.exception.ApiError;
 import br.com.massao.logrequest.application.exception.NotFoundException;
 import br.com.massao.logrequest.infrastructure.model.LogRequestModel;
 import br.com.massao.logrequest.infrastructure.repository.query.LogRequestSpecifications;
-import br.com.massao.logrequest.service.LogRequestService;
+import br.com.massao.logrequest.domain.service.LogRequestService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;

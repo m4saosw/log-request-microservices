@@ -6,7 +6,7 @@ import br.com.massao.logrequest.application.dto.LogRequestForm;
 import br.com.massao.logrequest.application.exception.NotFoundException;
 import br.com.massao.logrequest.infrastructure.model.LogRequestModel;
 import br.com.massao.logrequest.infrastructure.repository.query.LogRequestSpecifications;
-import br.com.massao.logrequest.service.LogRequestService;
+import br.com.massao.logrequest.domain.service.LogRequestService;
 import br.com.massao.logrequest.application.util.DateFormatterUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
