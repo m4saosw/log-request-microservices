@@ -1,4 +1,4 @@
-package br.com.massao.logrequest.dto;
+package br.com.massao.logrequest.application.dto;
 
 import br.com.massao.logrequest.util.CustomDateSerializer;
 import br.com.massao.logrequest.util.DateFormatterUtil;

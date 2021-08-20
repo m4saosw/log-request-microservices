@@ -1,8 +1,8 @@
 package br.com.massao.logrequest.resource;
 
 import br.com.massao.logrequest.LogRequestServiceApplicationDDD;
-import br.com.massao.logrequest.dto.LogRequest;
-import br.com.massao.logrequest.dto.LogRequestForm;
+import br.com.massao.logrequest.application.dto.LogRequest;
+import br.com.massao.logrequest.application.dto.LogRequestForm;
 import br.com.massao.logrequest.model.LogRequestModel;
 import br.com.massao.logrequest.util.DateFormatterUtil;
 import org.junit.jupiter.api.BeforeEach;

@@ -1,6 +1,6 @@
-package br.com.massao.logrequest.converter;
+package br.com.massao.logrequest.application.converter;
 
-import br.com.massao.logrequest.dto.LogRequestForm;
+import br.com.massao.logrequest.application.dto.LogRequestForm;
 import br.com.massao.logrequest.model.LogRequestModel;
 import br.com.massao.logrequest.util.DateFormatterUtil;
 import org.junit.jupiter.api.Test;
