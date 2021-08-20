@@ -1,4 +1,4 @@
-package br.com.massao.logrequest.util;
+package br.com.massao.logrequest.application.util;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.SerializerProvider;

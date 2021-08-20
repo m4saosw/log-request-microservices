@@ -2,7 +2,7 @@ package br.com.massao.logrequest.application.converter;
 
 import br.com.massao.logrequest.application.dto.LogRequestForm;
 import br.com.massao.logrequest.model.LogRequestModel;
-import br.com.massao.logrequest.util.DateFormatterUtil;
+import br.com.massao.logrequest.application.util.DateFormatterUtil;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;

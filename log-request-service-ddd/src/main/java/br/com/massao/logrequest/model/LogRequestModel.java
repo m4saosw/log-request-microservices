@@ -1,7 +1,7 @@
 package br.com.massao.logrequest.model;
 
-import br.com.massao.logrequest.util.CustomDateSerializer;
-import br.com.massao.logrequest.util.DateFormatterUtil;
+import br.com.massao.logrequest.application.util.CustomDateSerializer;
+import br.com.massao.logrequest.application.util.DateFormatterUtil;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.AllArgsConstructor;

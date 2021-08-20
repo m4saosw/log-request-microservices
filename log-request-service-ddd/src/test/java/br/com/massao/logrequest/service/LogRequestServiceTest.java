@@ -3,7 +3,7 @@ package br.com.massao.logrequest.service;
 import br.com.massao.logrequest.application.exception.NotFoundException;
 import br.com.massao.logrequest.model.LogRequestModel;
 import br.com.massao.logrequest.repository.LogRequestRepository;
-import br.com.massao.logrequest.util.DateFormatterUtil;
+import br.com.massao.logrequest.application.util.DateFormatterUtil;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

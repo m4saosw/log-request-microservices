@@ -1,4 +1,4 @@
-package br.com.massao.logrequest.util;
+package br.com.massao.logrequest.application.util;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;

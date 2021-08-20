@@ -1,6 +1,6 @@
 package br.com.massao.logrequest.resource;
 
-import br.com.massao.logrequest.util.DateFormatterUtil;
+import br.com.massao.logrequest.application.util.DateFormatterUtil;
 import lombok.Getter;
 import lombok.ToString;
 
