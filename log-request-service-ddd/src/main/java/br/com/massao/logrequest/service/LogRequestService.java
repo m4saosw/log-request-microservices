@@ -1,7 +1,7 @@
 package br.com.massao.logrequest.service;
 
 import br.com.massao.logrequest.application.exception.NotFoundException;
-import br.com.massao.logrequest.model.LogRequestModel;
+import br.com.massao.logrequest.infrastructure.model.LogRequestModel;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;

@@ -2,7 +2,7 @@ package br.com.massao.logrequest.application.converter;
 
 
 import br.com.massao.logrequest.application.dto.LogRequestForm;
-import br.com.massao.logrequest.model.LogRequestModel;
+import br.com.massao.logrequest.infrastructure.model.LogRequestModel;
 import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;
 

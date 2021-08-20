@@ -1,6 +1,6 @@
 package br.com.massao.logrequest.application.dto;
 
-import br.com.massao.logrequest.model.LogRequestModel;
+import br.com.massao.logrequest.infrastructure.model.LogRequestModel;
 import br.com.massao.logrequest.application.util.CustomDateSerializer;
 import br.com.massao.logrequest.application.util.DateFormatterUtil;
 import com.fasterxml.jackson.annotation.JsonFormat;

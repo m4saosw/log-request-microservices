@@ -1,7 +1,7 @@
 package br.com.massao.logrequest.service;
 
 import br.com.massao.logrequest.application.exception.NotFoundException;
-import br.com.massao.logrequest.model.LogRequestModel;
+import br.com.massao.logrequest.infrastructure.model.LogRequestModel;
 import br.com.massao.logrequest.infrastructure.repository.LogRequestRepository;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import lombok.extern.slf4j.Slf4j;

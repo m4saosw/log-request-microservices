@@ -1,6 +1,6 @@
 package br.com.massao.logrequest.infrastructure.repository;
 
-import br.com.massao.logrequest.model.LogRequestModel;
+import br.com.massao.logrequest.infrastructure.model.LogRequestModel;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

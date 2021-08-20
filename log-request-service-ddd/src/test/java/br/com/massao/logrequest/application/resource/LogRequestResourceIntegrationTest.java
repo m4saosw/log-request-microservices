@@ -3,7 +3,7 @@ package br.com.massao.logrequest.application.resource;
 import br.com.massao.logrequest.LogRequestServiceApplicationDDD;
 import br.com.massao.logrequest.application.dto.LogRequest;
 import br.com.massao.logrequest.application.dto.LogRequestForm;
-import br.com.massao.logrequest.model.LogRequestModel;
+import br.com.massao.logrequest.infrastructure.model.LogRequestModel;
 import br.com.massao.logrequest.application.util.DateFormatterUtil;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

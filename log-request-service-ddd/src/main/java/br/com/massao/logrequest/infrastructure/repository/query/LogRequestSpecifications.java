@@ -1,6 +1,6 @@
 package br.com.massao.logrequest.infrastructure.repository.query;
 
-import br.com.massao.logrequest.model.LogRequestModel;
+import br.com.massao.logrequest.infrastructure.model.LogRequestModel;
 import br.com.massao.logrequest.application.resource.LogRequestParams;
 import org.springframework.data.jpa.domain.Specification;
 
