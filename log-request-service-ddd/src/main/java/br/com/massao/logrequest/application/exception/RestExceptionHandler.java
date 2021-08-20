@@ -1,4 +1,4 @@
-package br.com.massao.logrequest.exception;
+package br.com.massao.logrequest.application.exception;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,4 +1,4 @@
-package br.com.massao.logrequest.exception;
+package br.com.massao.logrequest.application.exception;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
