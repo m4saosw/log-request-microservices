@@ -1,6 +1,5 @@
-package br.com.massao.logrequest.resource;
+package br.com.massao.logrequest.application.resource;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertNull;

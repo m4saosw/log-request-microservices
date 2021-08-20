@@ -1,7 +1,7 @@
 package br.com.massao.logrequest.repository.query;
 
 import br.com.massao.logrequest.model.LogRequestModel;
-import br.com.massao.logrequest.resource.LogRequestParams;
+import br.com.massao.logrequest.application.resource.LogRequestParams;
 import org.springframework.data.jpa.domain.Specification;
 
 import javax.persistence.criteria.CriteriaBuilder;

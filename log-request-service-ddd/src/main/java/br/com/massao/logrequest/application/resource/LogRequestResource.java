@@ -1,4 +1,4 @@
-package br.com.massao.logrequest.resource;
+package br.com.massao.logrequest.application.resource;
 
 import br.com.massao.logrequest.application.converter.LogRequestModelConverter;
 import br.com.massao.logrequest.application.dto.LogRequest;
