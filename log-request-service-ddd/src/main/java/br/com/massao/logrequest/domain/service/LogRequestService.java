@@ -36,7 +36,7 @@ public interface LogRequestService {
      * @param model
      * @return
      */
-    LogRequestModel save(LogRequestModel model);
+    DomainLogRequest save(DomainLogRequest domain);
 
 
     /**

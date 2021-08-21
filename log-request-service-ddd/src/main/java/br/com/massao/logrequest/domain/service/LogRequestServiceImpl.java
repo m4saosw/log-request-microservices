@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 @Slf4j
 @Service
 public class LogRequestServiceImpl implements LogRequestService {
+    // TODO - remover apos a migracao
     @Autowired
     private LogRequestRepository repository;
 
@@ -61,15 +62,15 @@ public class LogRequestServiceImpl implements LogRequestService {
     /**
      * Save a new log
      *
-     * @param model
+     * @param domain
      * @return
      */
     @Override
     @HystrixCommand(threadPoolKey = "commandThreadPool")
-    public LogRequestModel save(LogRequestModel model) {
-        log.debug("save model={}", model);
+    public DomainLogRequest save(DomainLogRequest domain) {
+        log.debug("save domain={}", domain);
 
-        return repository.save(model);
+        return repositoryPort.create(domain);
     }
 
 

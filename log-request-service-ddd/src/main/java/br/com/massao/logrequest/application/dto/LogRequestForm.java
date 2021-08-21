@@ -2,6 +2,7 @@ package br.com.massao.logrequest.application.dto;
 
 import br.com.massao.logrequest.application.util.CustomDateSerializer;
 import br.com.massao.logrequest.application.util.DateFormatterUtil;
+import br.com.massao.logrequest.domain.DomainLogRequest;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -12,6 +13,7 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 /**
  * Log Request input data
@@ -49,4 +51,17 @@ public class LogRequestForm {
     @NotEmpty
     @NotNull
     private String userAgent;
+
+
+    public DomainLogRequest toDomain() {
+        if (Objects.isNull(this)) return null;
+
+        return DomainLogRequest.builder()
+                .date(this.getDate())
+                .ip(this.getIp())
+                .request(this.getRequest())
+                .status(this.getStatus())
+                .userAgent(this.getUserAgent())
+                .build();
+    }
 }

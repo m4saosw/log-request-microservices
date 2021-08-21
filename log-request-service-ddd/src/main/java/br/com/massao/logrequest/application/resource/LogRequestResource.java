@@ -97,12 +97,12 @@ public class LogRequestResource {
     public ResponseEntity<Void> create(@Valid @RequestBody LogRequestForm form) {
         log.info("create form={}", form);
 
-        LogRequestModel model = converter.modelFrom(form);
-        LogRequestModel entity = service.save(model);
+        DomainLogRequest newDomain = form.toDomain();
+        DomainLogRequest saved = service.save(newDomain);
 
-        // nota: ResponseEntity retornando link do novo recurso no cabecalho da requisicao
+        // nota: ResponseEntity retornando link do newDomain recurso no cabecalho da requisicao
         URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
-                .buildAndExpand(entity.getId()).toUri();
+                .buildAndExpand(saved.getId()).toUri();
 
         return ResponseEntity.created(location).build();
     }

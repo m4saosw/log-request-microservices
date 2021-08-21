@@ -13,6 +13,9 @@ import java.util.stream.Collectors;
 
 @Component
 @NoArgsConstructor
+/**
+ * TODO - Remover apos migracao
+ */
 public class LogRequestModelConverter {
 
     public LogRequestModel modelFrom(LogRequestForm form) {
