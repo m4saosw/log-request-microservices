@@ -1,8 +1,9 @@
 package br.com.massao.logrequest.application.dto;
 
-import br.com.massao.logrequest.infrastructure.model.LogRequestModel;
 import br.com.massao.logrequest.application.util.CustomDateSerializer;
 import br.com.massao.logrequest.application.util.DateFormatterUtil;
+import br.com.massao.logrequest.domain.DomainLogRequest;
+import br.com.massao.logrequest.infrastructure.model.LogRequestModel;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -51,6 +52,7 @@ public class LogRequest {
     private String userAgent;
 
 
+    // TODO - remover apos concluir a migracao
     public LogRequest(LogRequestModel model) {
         this.id = model.getId();
         this.date = model.getDate();
@@ -58,6 +60,15 @@ public class LogRequest {
         this.request = model.getRequest();
         this.status = model.getStatus();
         this.userAgent = model.getUserAgent();
+    }
+
+    public LogRequest(DomainLogRequest domain) {
+        this.id = domain.getId();
+        this.date = domain.getDate();
+        this.ip = domain.getIp();
+        this.request = domain.getRequest();
+        this.status = domain.getStatus();
+        this.userAgent = domain.getUserAgent();
     }
 
     /**

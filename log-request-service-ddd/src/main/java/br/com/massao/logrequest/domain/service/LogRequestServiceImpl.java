@@ -1,6 +1,8 @@
 package br.com.massao.logrequest.domain.service;
 
+import br.com.massao.logrequest.domain.DomainLogRequest;
 import br.com.massao.logrequest.domain.NotFoundException;
+import br.com.massao.logrequest.domain.repository.DomainLogRequestRepositoryPort;
 import br.com.massao.logrequest.infrastructure.model.LogRequestModel;
 import br.com.massao.logrequest.infrastructure.repository.LogRequestRepository;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
@@ -16,6 +18,13 @@ import org.springframework.stereotype.Service;
 public class LogRequestServiceImpl implements LogRequestService {
     @Autowired
     private LogRequestRepository repository;
+
+    private DomainLogRequestRepositoryPort repositoryPort;
+
+    public LogRequestServiceImpl(DomainLogRequestRepositoryPort repository) {
+        this.repositoryPort = repository;
+    }
+
 
 
     /**
@@ -42,10 +51,10 @@ public class LogRequestServiceImpl implements LogRequestService {
      */
     @Override
     @HystrixCommand(threadPoolKey = "queryThreadPool")
-    public LogRequestModel findById(Long id) throws NotFoundException {
+    public DomainLogRequest findById(Long id) throws NotFoundException {
         log.debug("findById id={}", id);
 
-        return repository.findById(id).orElseThrow(() -> new NotFoundException());
+        return repositoryPort.findById(id).orElseThrow(() -> new NotFoundException());
     }
 
 

@@ -1,5 +1,6 @@
 package br.com.massao.logrequest.domain.service;
 
+import br.com.massao.logrequest.domain.DomainLogRequest;
 import br.com.massao.logrequest.domain.NotFoundException;
 import br.com.massao.logrequest.infrastructure.model.LogRequestModel;
 import org.springframework.data.domain.Page;
@@ -26,7 +27,7 @@ public interface LogRequestService {
      * @return
      * @throws NotFoundException
      */
-    LogRequestModel findById(Long id) throws NotFoundException;
+    DomainLogRequest findById(Long id) throws NotFoundException;
 
 
     /**

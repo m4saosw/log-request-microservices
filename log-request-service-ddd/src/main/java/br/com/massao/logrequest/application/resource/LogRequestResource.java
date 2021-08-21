@@ -4,10 +4,11 @@ import br.com.massao.logrequest.application.converter.LogRequestModelConverter;
 import br.com.massao.logrequest.application.dto.LogRequest;
 import br.com.massao.logrequest.application.dto.LogRequestForm;
 import br.com.massao.logrequest.application.exception.ApiError;
+import br.com.massao.logrequest.domain.DomainLogRequest;
 import br.com.massao.logrequest.domain.NotFoundException;
+import br.com.massao.logrequest.domain.service.LogRequestService;
 import br.com.massao.logrequest.infrastructure.model.LogRequestModel;
 import br.com.massao.logrequest.infrastructure.repository.query.LogRequestSpecifications;
-import br.com.massao.logrequest.domain.service.LogRequestService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
@@ -74,8 +75,8 @@ public class LogRequestResource {
     public ResponseEntity<LogRequest> findById(@PathVariable("id") Long id) throws NotFoundException {
         log.info("findById id={}", id);
 
-        LogRequestModel model = service.findById(id);
-        return ResponseEntity.ok(new LogRequest(model));
+        DomainLogRequest found = service.findById(id);
+        return ResponseEntity.ok(new LogRequest(found));
     }
 
 
