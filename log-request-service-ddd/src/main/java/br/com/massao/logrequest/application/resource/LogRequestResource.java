@@ -126,10 +126,10 @@ public class LogRequestResource {
     public ResponseEntity<LogRequest> update(@PathVariable("id") Long id, @Valid @RequestBody LogRequestForm form) throws NotFoundException {
         log.info("modify id={} form={}", id, form);
 
-        LogRequestModel model = converter.modelFrom(form);
-        LogRequestModel modified = service.update(id, model);
+        DomainLogRequest newDomain = form.toDomain();
+        DomainLogRequest updated = service.update(id, newDomain);
 
-        return ResponseEntity.ok().body(new LogRequest(modified));
+        return ResponseEntity.ok().body(new LogRequest(updated));
     }
 
 

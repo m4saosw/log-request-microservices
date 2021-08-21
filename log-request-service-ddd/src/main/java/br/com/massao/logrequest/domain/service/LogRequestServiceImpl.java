@@ -84,18 +84,10 @@ public class LogRequestServiceImpl implements LogRequestService {
      */
     @Override
     @HystrixCommand(threadPoolKey = "commandThreadPool")
-    public LogRequestModel update(Long id, LogRequestModel newLog) throws NotFoundException {
-        log.debug("update model={} {}", id, newLog);
+    public DomainLogRequest update(Long id, DomainLogRequest newLog) throws NotFoundException {
+        log.debug("update id={} new domain={}", id, newLog);
 
-        return repository.findById(id).map(model -> {
-            model.setDate(newLog.getDate());
-            model.setRequest(newLog.getRequest());
-            model.setIp(newLog.getIp());
-            model.setStatus(newLog.getStatus());
-            model.setUserAgent(newLog.getUserAgent());
-
-            return repository.save(model);
-        }).orElseThrow(() -> new NotFoundException());
+        return repositoryPort.update(id, newLog);
     }
 
 

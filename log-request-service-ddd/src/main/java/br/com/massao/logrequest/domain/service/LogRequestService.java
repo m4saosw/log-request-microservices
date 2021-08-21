@@ -8,6 +8,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+/**
+ *  Tambem chamado de Adapter na hexagonal architecture.
+ *  Representa um Adaptador para uma Porta
+ */
 @Service
 public interface LogRequestService {
 
@@ -47,7 +51,7 @@ public interface LogRequestService {
      * @return
      * @throws NotFoundException
      */
-    LogRequestModel update(Long id, LogRequestModel newLog) throws NotFoundException;
+    DomainLogRequest update(Long id, DomainLogRequest newLog) throws NotFoundException;
 
 
     /**
