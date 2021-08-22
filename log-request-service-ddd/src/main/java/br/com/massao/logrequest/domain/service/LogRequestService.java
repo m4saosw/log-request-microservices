@@ -5,13 +5,11 @@ import br.com.massao.logrequest.domain.NotFoundException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
-import org.springframework.stereotype.Service;
 
 /**
  * Porta do Servico de Dominio
  * Port na hexagonal architecture.
  */
-@Service
 public interface LogRequestService {
 
     /**
