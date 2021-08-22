@@ -77,7 +77,12 @@ public class LogRequest {
      * @param model
      * @return
      */
+    // TODO - remover apos migracao
     public Page<LogRequest> listLogRequestFrom(Page<LogRequestModel> model) {
         return model.map(LogRequest::new);
+    }
+
+    public Page<LogRequest> listLogRequestFromDomain(Page<DomainLogRequest> domains) {
+        return domains.map(LogRequest::new);
     }
 }

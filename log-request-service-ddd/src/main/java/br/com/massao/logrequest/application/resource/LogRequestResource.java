@@ -54,7 +54,7 @@ public class LogRequestResource {
 
         log.info("list pageable=<{}>", page);
 
-        Page<LogRequest> resultList = new LogRequest().listLogRequestFrom(service.list(page));
+        Page<LogRequest> resultList = new LogRequest().listLogRequestFromDomain(service.list(page));
         return ResponseEntity.ok(resultList);
     }
 

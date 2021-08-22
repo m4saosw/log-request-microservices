@@ -36,10 +36,10 @@ public class LogRequestServiceImpl implements LogRequestService {
      */
     @Override
     @HystrixCommand(threadPoolKey = "largeQueryThreadPool")
-    public Page<LogRequestModel> list(Pageable pageable) {
+    public Page<DomainLogRequest> list(Pageable pageable) {
         log.debug("list pageable");
 
-        return repository.findAll(pageable);
+        return repositoryPort.listAll(pageable);
     }
 
 

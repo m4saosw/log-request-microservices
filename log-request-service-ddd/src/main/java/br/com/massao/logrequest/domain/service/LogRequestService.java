@@ -21,7 +21,7 @@ public interface LogRequestService {
      * @param pageable
      * @return
      */
-    Page<LogRequestModel> list(Pageable pageable);
+    Page<DomainLogRequest> list(Pageable pageable);
 
 
     /**

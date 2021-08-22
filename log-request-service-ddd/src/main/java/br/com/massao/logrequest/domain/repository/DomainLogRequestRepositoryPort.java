@@ -2,6 +2,8 @@ package br.com.massao.logrequest.domain.repository;
 
 import br.com.massao.logrequest.domain.DomainLogRequest;
 import br.com.massao.logrequest.domain.NotFoundException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 import java.util.Optional;
@@ -11,7 +13,7 @@ import java.util.Optional;
  * Tambem chamado de Port na hexagonal architecture. Responsavel pela interface entre dominio e infraestrutura
  */
 public interface DomainLogRequestRepositoryPort {
-    List<DomainLogRequest> listAll();
+    Page<DomainLogRequest> listAll(Pageable page);
 
     Optional<DomainLogRequest> findById(Long id);
 
