@@ -3,13 +3,13 @@ package br.com.massao.logrequest.infrastructure.config;
 import br.com.massao.logrequest.domain.repository.DomainLogRequestRepositoryPort;
 import br.com.massao.logrequest.domain.service.DomainLogRequestServiceAdapter;
 import br.com.massao.logrequest.domain.service.LogRequestService;
-import br.com.massao.logrequest.infrastructure.repository.LogRequestRepository;
+import br.com.massao.logrequest.infrastructure.repository.SpringDataJpaLogRequestRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-@ComponentScan(basePackageClasses = LogRequestRepository.class)
+@ComponentScan(basePackageClasses = SpringDataJpaLogRequestRepository.class)
 public class BeanConfiguration {
 
     /**

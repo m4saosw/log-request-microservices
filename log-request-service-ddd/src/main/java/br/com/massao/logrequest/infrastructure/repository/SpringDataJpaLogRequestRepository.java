@@ -6,6 +6,6 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface LogRequestRepository extends JpaRepository<LogRequestModel, Long>, JpaSpecificationExecutor<LogRequestModel> {
+public interface SpringDataJpaLogRequestRepository extends JpaRepository<LogRequestModel, Long>, JpaSpecificationExecutor<LogRequestModel> {
 
 }
