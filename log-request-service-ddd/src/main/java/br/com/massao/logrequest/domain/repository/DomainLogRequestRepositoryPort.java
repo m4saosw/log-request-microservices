@@ -4,6 +4,7 @@ import br.com.massao.logrequest.domain.DomainLogRequest;
 import br.com.massao.logrequest.domain.NotFoundException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 
 import java.util.List;
 import java.util.Optional;
@@ -20,4 +21,6 @@ public interface DomainLogRequestRepositoryPort {
     DomainLogRequest update(Long id, DomainLogRequest log) throws NotFoundException;
 
     DomainLogRequest create(DomainLogRequest log);
+
+    Page<DomainLogRequest> listAll(Specification<DomainLogRequest> spec, Pageable page);
 }

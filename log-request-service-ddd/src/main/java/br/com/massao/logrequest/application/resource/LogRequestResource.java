@@ -7,7 +7,6 @@ import br.com.massao.logrequest.application.exception.ApiError;
 import br.com.massao.logrequest.domain.DomainLogRequest;
 import br.com.massao.logrequest.domain.NotFoundException;
 import br.com.massao.logrequest.domain.service.LogRequestService;
-import br.com.massao.logrequest.infrastructure.model.LogRequestModel;
 import br.com.massao.logrequest.infrastructure.repository.query.LogRequestSpecifications;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -166,8 +165,8 @@ public class LogRequestResource {
         boolean anyParam = params.haveStartDate() || params.haveEndDate() || params.haveIp() || params.haveRequests() || params.haveStatus() || params.haveUserAgent();
         if (!anyParam) return ResponseEntity.badRequest().build();
 
-        final Specification<LogRequestModel> specification = new LogRequestSpecifications().fromParams(params);
-        Page<LogRequest> resultList = new LogRequest().listLogRequestFrom(service.searchByFilters(specification, page));
+        final Specification<DomainLogRequest> specification = new LogRequestSpecifications().fromParams(params);
+        Page<LogRequest> resultList = new LogRequest().listLogRequestFromDomain(service.searchByFilters(specification, page));
         return ResponseEntity.ok(resultList);
     }
 

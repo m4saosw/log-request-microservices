@@ -3,7 +3,6 @@ package br.com.massao.logrequest.domain.service;
 import br.com.massao.logrequest.domain.DomainLogRequest;
 import br.com.massao.logrequest.domain.NotFoundException;
 import br.com.massao.logrequest.domain.repository.DomainLogRequestRepositoryPort;
-import br.com.massao.logrequest.infrastructure.model.LogRequestModel;
 import br.com.massao.logrequest.infrastructure.repository.LogRequestRepository;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import lombok.extern.slf4j.Slf4j;
@@ -100,8 +99,8 @@ public class LogRequestServiceImpl implements LogRequestService {
      */
     @Override
     @HystrixCommand(threadPoolKey = "largeQueryThreadPool")
-    public Page<LogRequestModel> searchByFilters(Specification<LogRequestModel> spec, Pageable pageable) {
+    public Page<DomainLogRequest> searchByFilters(Specification<DomainLogRequest> spec, Pageable pageable) {
         log.debug("list pageable with filters");
-        return repository.findAll(spec, pageable);
+        return repositoryPort.listAll(spec, pageable);
     }
 }

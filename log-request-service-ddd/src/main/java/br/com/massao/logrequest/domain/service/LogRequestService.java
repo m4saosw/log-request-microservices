@@ -61,5 +61,5 @@ public interface LogRequestService {
      * @param pageable
      * @return
      */
-    Page<LogRequestModel> searchByFilters(Specification<LogRequestModel> spec, Pageable pageable);
+    Page<DomainLogRequest> searchByFilters(Specification<DomainLogRequest> spec, Pageable pageable);
 }
