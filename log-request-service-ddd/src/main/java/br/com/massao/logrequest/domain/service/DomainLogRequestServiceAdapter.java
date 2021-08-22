@@ -3,28 +3,25 @@ package br.com.massao.logrequest.domain.service;
 import br.com.massao.logrequest.domain.DomainLogRequest;
 import br.com.massao.logrequest.domain.NotFoundException;
 import br.com.massao.logrequest.domain.repository.DomainLogRequestRepositoryPort;
-import br.com.massao.logrequest.infrastructure.repository.LogRequestRepository;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
-import org.springframework.stereotype.Service;
 
+/**
+ * Servico do dominio de Log
+ * Tambem chamado de Adapter do servico
+ * Mantem logica que nao pode fazer parte do Aggregate root
+ * Nao registrado como bean do spring pois o spring esta na parte de infraestrutura
+ */
 @Slf4j
-@Service
-public class LogRequestServiceImpl implements LogRequestService {
-    // TODO - remover apos a migracao
-    @Autowired
-    private LogRequestRepository repository;
-
+public class DomainLogRequestServiceAdapter implements LogRequestService {
     private DomainLogRequestRepositoryPort repositoryPort;
 
-    public LogRequestServiceImpl(DomainLogRequestRepositoryPort repository) {
+    public DomainLogRequestServiceAdapter(DomainLogRequestRepositoryPort repository) {
         this.repositoryPort = repository;
     }
-
 
 
     /**
