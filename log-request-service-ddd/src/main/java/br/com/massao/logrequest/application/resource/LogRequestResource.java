@@ -1,6 +1,5 @@
 package br.com.massao.logrequest.application.resource;
 
-import br.com.massao.logrequest.application.converter.LogRequestModelConverter;
 import br.com.massao.logrequest.application.dto.LogRequest;
 import br.com.massao.logrequest.application.dto.LogRequestForm;
 import br.com.massao.logrequest.application.exception.ApiError;
@@ -34,8 +33,6 @@ public class LogRequestResource {
     @Autowired
     private LogRequestServicePort service;
 
-    @Autowired
-    private LogRequestModelConverter converter;
 
     /**
      * List Logs
