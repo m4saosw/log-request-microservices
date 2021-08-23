@@ -1,6 +1,6 @@
 package br.com.massao.logrequest.domain.service;
 
-import br.com.massao.logrequest.application.resource.LogRequestParams;
+import br.com.massao.logrequest.domain.DomainLogRequestParams;
 import br.com.massao.logrequest.domain.DomainLogRequest;
 import br.com.massao.logrequest.domain.NotFoundException;
 import br.com.massao.logrequest.domain.repository.DomainLogRequestRepositoryPort;
@@ -96,7 +96,7 @@ public class DomainLogRequestServiceAdapter implements LogRequestService {
      */
     @Override
     @HystrixCommand(threadPoolKey = "largeQueryThreadPool")
-    public Page<DomainLogRequest> searchByFilters(LogRequestParams parameters, Pageable pageable) {
+    public Page<DomainLogRequest> searchByFilters(DomainLogRequestParams parameters, Pageable pageable) {
         log.debug("list pageable with filters");
         return repositoryPort.listAll(parameters, pageable);
     }

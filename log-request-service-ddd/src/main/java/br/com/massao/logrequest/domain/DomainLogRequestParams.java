@@ -1,4 +1,4 @@
-package br.com.massao.logrequest.application.resource;
+package br.com.massao.logrequest.domain;
 
 import br.com.massao.logrequest.application.util.DateFormatterUtil;
 import lombok.Getter;
@@ -10,7 +10,7 @@ import java.util.Objects;
 
 @Getter
 @ToString
-public class LogRequestParams {
+public class DomainLogRequestParams {
 
     private LocalDateTime startDate;
     private LocalDateTime endDate;
@@ -19,7 +19,7 @@ public class LogRequestParams {
     private Short status;
     private String userAgent;
 
-    public LogRequestParams(String startDate, String endDate, String ip, String request, String status, String userAgent) {
+    public DomainLogRequestParams(String startDate, String endDate, String ip, String request, String status, String userAgent) {
         if (Objects.nonNull(startDate))
             this.startDate = LocalDateTime.parse(startDate, DateTimeFormatter.ofPattern(DateFormatterUtil.DATE_PATTERN_QUERY));
         if (Objects.nonNull(endDate))

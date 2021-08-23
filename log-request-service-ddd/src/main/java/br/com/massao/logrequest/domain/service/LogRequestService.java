@@ -1,6 +1,6 @@
 package br.com.massao.logrequest.domain.service;
 
-import br.com.massao.logrequest.application.resource.LogRequestParams;
+import br.com.massao.logrequest.domain.DomainLogRequestParams;
 import br.com.massao.logrequest.domain.DomainLogRequest;
 import br.com.massao.logrequest.domain.NotFoundException;
 import org.springframework.data.domain.Page;
@@ -58,5 +58,5 @@ public interface LogRequestService {
      * @param pageable
      * @return
      */
-    Page<DomainLogRequest> searchByFilters(LogRequestParams parameters, Pageable pageable);
+    Page<DomainLogRequest> searchByFilters(DomainLogRequestParams parameters, Pageable pageable);
 }

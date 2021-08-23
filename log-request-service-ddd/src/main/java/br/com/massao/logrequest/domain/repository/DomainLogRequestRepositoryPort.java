@@ -1,6 +1,6 @@
 package br.com.massao.logrequest.domain.repository;
 
-import br.com.massao.logrequest.application.resource.LogRequestParams;
+import br.com.massao.logrequest.domain.DomainLogRequestParams;
 import br.com.massao.logrequest.domain.DomainLogRequest;
 import br.com.massao.logrequest.domain.NotFoundException;
 import org.springframework.data.domain.Page;
@@ -21,5 +21,5 @@ public interface DomainLogRequestRepositoryPort {
 
     DomainLogRequest create(DomainLogRequest log);
 
-    Page<DomainLogRequest> listAll(LogRequestParams parameters, Pageable page);
+    Page<DomainLogRequest> listAll(DomainLogRequestParams parameters, Pageable page);
 }
