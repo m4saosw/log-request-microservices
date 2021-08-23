@@ -10,7 +10,7 @@ import org.springframework.data.domain.Pageable;
  * Porta do Servico de Dominio
  * Port na hexagonal architecture.
  */
-public interface LogRequestService {
+public interface LogRequestServicePort {
 
     /**
      * List all logs

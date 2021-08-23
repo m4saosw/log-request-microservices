@@ -7,7 +7,7 @@ import br.com.massao.logrequest.application.exception.ApiError;
 import br.com.massao.logrequest.domain.DomainLogRequest;
 import br.com.massao.logrequest.domain.DomainLogRequestParams;
 import br.com.massao.logrequest.domain.NotFoundException;
-import br.com.massao.logrequest.domain.service.LogRequestService;
+import br.com.massao.logrequest.domain.service.LogRequestServicePort;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
@@ -32,7 +32,7 @@ import java.net.URI;
 @RequestMapping("v1/log-requests")
 public class LogRequestResource {
     @Autowired
-    private LogRequestService service;
+    private LogRequestServicePort service;
 
     @Autowired
     private LogRequestModelConverter converter;

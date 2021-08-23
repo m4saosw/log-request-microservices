@@ -2,7 +2,7 @@ package br.com.massao.logrequest.infrastructure.config;
 
 import br.com.massao.logrequest.domain.repository.DomainLogRequestRepositoryPort;
 import br.com.massao.logrequest.domain.service.DomainLogRequestServiceAdapter;
-import br.com.massao.logrequest.domain.service.LogRequestService;
+import br.com.massao.logrequest.domain.service.LogRequestServicePort;
 import br.com.massao.logrequest.infrastructure.repository.SpringDataJpaLogRequestRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -18,7 +18,7 @@ public class BeanConfiguration {
      * @return
      */
     @Bean
-    LogRequestService logRequestService(final DomainLogRequestRepositoryPort repository) {
+    LogRequestServicePort logRequestService(final DomainLogRequestRepositoryPort repository) {
         return new DomainLogRequestServiceAdapter(repository);
     }
 }

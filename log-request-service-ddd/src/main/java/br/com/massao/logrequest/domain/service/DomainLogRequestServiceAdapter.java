@@ -16,7 +16,7 @@ import org.springframework.data.domain.Pageable;
  * Nao registrado como bean do spring pois o spring esta na parte de infraestrutura
  */
 @Slf4j
-public class DomainLogRequestServiceAdapter implements LogRequestService {
+public class DomainLogRequestServiceAdapter implements LogRequestServicePort {
     private DomainLogRequestRepositoryPort repositoryPort;
 
     public DomainLogRequestServiceAdapter(DomainLogRequestRepositoryPort repository) {
