@@ -1,5 +1,6 @@
 package br.com.massao.logrequest.domain.service;
 
+import br.com.massao.logrequest.application.resource.LogRequestParams;
 import br.com.massao.logrequest.domain.DomainLogRequest;
 import br.com.massao.logrequest.domain.NotFoundException;
 import br.com.massao.logrequest.domain.repository.DomainLogRequestRepositoryPort;
@@ -7,7 +8,6 @@ import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.domain.Specification;
 
 /**
  * Servico do dominio de Log
@@ -90,14 +90,14 @@ public class DomainLogRequestServiceAdapter implements LogRequestService {
     /**
      * Search logs by filters
      *
-     * @param spec
+     * @param parameters
      * @param pageable
      * @return
      */
     @Override
     @HystrixCommand(threadPoolKey = "largeQueryThreadPool")
-    public Page<DomainLogRequest> searchByFilters(Specification<DomainLogRequest> spec, Pageable pageable) {
+    public Page<DomainLogRequest> searchByFilters(LogRequestParams parameters, Pageable pageable) {
         log.debug("list pageable with filters");
-        return repositoryPort.listAll(spec, pageable);
+        return repositoryPort.listAll(parameters, pageable);
     }
 }

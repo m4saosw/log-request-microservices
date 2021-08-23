@@ -7,7 +7,6 @@ import br.com.massao.logrequest.application.exception.ApiError;
 import br.com.massao.logrequest.domain.DomainLogRequest;
 import br.com.massao.logrequest.domain.NotFoundException;
 import br.com.massao.logrequest.domain.service.LogRequestService;
-import br.com.massao.logrequest.infrastructure.repository.query.LogRequestSpecifications;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
@@ -15,7 +14,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -165,8 +163,7 @@ public class LogRequestResource {
         boolean anyParam = params.haveStartDate() || params.haveEndDate() || params.haveIp() || params.haveRequests() || params.haveStatus() || params.haveUserAgent();
         if (!anyParam) return ResponseEntity.badRequest().build();
 
-        final Specification<DomainLogRequest> specification = new LogRequestSpecifications().fromParams(params);
-        Page<LogRequest> resultList = new LogRequest().listLogRequestFromDomain(service.searchByFilters(specification, page));
+        Page<LogRequest> resultList = new LogRequest().listLogRequestFromDomain(service.searchByFilters(params, page));
         return ResponseEntity.ok(resultList);
     }
 

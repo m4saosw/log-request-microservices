@@ -1,7 +1,7 @@
 package br.com.massao.logrequest.infrastructure.repository.query;
 
 import br.com.massao.logrequest.application.resource.LogRequestParams;
-import br.com.massao.logrequest.domain.DomainLogRequest;
+import br.com.massao.logrequest.infrastructure.model.LogRequestModel;
 import org.springframework.data.jpa.domain.Specification;
 
 import javax.persistence.criteria.CriteriaBuilder;
@@ -13,8 +13,8 @@ import java.util.List;
 
 public class LogRequestSpecifications {
 
-    public Specification<DomainLogRequest> fromParams(LogRequestParams params) {
-        return (Root<DomainLogRequest> root, CriteriaQuery<?> query, CriteriaBuilder cb) -> {
+    public Specification<LogRequestModel> fromParams(LogRequestParams params) {
+        return (Root<LogRequestModel> root, CriteriaQuery<?> query, CriteriaBuilder cb) -> {
             List<Predicate> predicates = new ArrayList<>();
 
             addPredicateDate(params, root, cb, predicates);
@@ -28,7 +28,7 @@ public class LogRequestSpecifications {
     }
 
 
-    private void addPredicateDate(LogRequestParams params, Root<DomainLogRequest> root, CriteriaBuilder cb, List<Predicate> predicates) {
+    private void addPredicateDate(LogRequestParams params, Root<LogRequestModel> root, CriteriaBuilder cb, List<Predicate> predicates) {
         if (params.haveStartDate() && params.haveEndDate()) {
             predicates.add(cb.and(
                     cb.between(root.get("date"), params.getStartDate(), params.getEndDate())));
@@ -43,28 +43,28 @@ public class LogRequestSpecifications {
     }
 
 
-    private void addPredicateIp(LogRequestParams params, Root<DomainLogRequest> root, CriteriaBuilder cb, List<Predicate> predicates) {
+    private void addPredicateIp(LogRequestParams params, Root<LogRequestModel> root, CriteriaBuilder cb, List<Predicate> predicates) {
         if (params.haveIp())
             predicates.add(cb.and(
                     cb.equal(root.get("ip"), params.getIp())));
     }
 
 
-    private void addPredicateRequest(LogRequestParams params, Root<DomainLogRequest> root, CriteriaBuilder cb, List<Predicate> predicates) {
+    private void addPredicateRequest(LogRequestParams params, Root<LogRequestModel> root, CriteriaBuilder cb, List<Predicate> predicates) {
         if (params.haveRequests())
             predicates.add(cb.and(
                     cb.like(cb.lower(root.get("request")), "%" + params.getRequest().toLowerCase() + "%")));
     }
 
 
-    private void addPredicateStatus(LogRequestParams params, Root<DomainLogRequest> root, CriteriaBuilder cb, List<Predicate> predicates) {
+    private void addPredicateStatus(LogRequestParams params, Root<LogRequestModel> root, CriteriaBuilder cb, List<Predicate> predicates) {
         if (params.haveStatus())
             predicates.add(cb.and(
                     cb.equal(root.get("status"), params.getStatus())));
     }
 
 
-    private void addPredicateUserAgent(LogRequestParams params, Root<DomainLogRequest> root, CriteriaBuilder cb, List<Predicate> predicates) {
+    private void addPredicateUserAgent(LogRequestParams params, Root<LogRequestModel> root, CriteriaBuilder cb, List<Predicate> predicates) {
         if (params.haveUserAgent())
             predicates.add(cb.and(
                     cb.like(cb.lower(root.get("userAgent")), "%" + params.getUserAgent().toLowerCase() + "%")));

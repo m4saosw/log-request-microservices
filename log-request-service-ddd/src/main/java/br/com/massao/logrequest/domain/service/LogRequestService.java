@@ -1,10 +1,10 @@
 package br.com.massao.logrequest.domain.service;
 
+import br.com.massao.logrequest.application.resource.LogRequestParams;
 import br.com.massao.logrequest.domain.DomainLogRequest;
 import br.com.massao.logrequest.domain.NotFoundException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.domain.Specification;
 
 /**
  * Porta do Servico de Dominio
@@ -54,9 +54,9 @@ public interface LogRequestService {
     /**
      * Search logs by filters
      *
-     * @param spec
+     * @param parameters
      * @param pageable
      * @return
      */
-    Page<DomainLogRequest> searchByFilters(Specification<DomainLogRequest> spec, Pageable pageable);
+    Page<DomainLogRequest> searchByFilters(LogRequestParams parameters, Pageable pageable);
 }
