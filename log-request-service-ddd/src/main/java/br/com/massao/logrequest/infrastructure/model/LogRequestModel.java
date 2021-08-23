@@ -2,6 +2,7 @@ package br.com.massao.logrequest.infrastructure.model;
 
 import br.com.massao.logrequest.application.util.CustomDateSerializer;
 import br.com.massao.logrequest.application.util.DateFormatterUtil;
+import br.com.massao.logrequest.domain.DomainLogRequest;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.AllArgsConstructor;
@@ -14,6 +15,7 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 /**
  * Log Request persistence model
@@ -51,4 +53,28 @@ public class LogRequestModel {
     @Column(name = "user_agent")
     @NotEmpty
     private String userAgent;
+
+
+    public LogRequestModel(DomainLogRequest model) {
+        this.id = model.getId();
+        this.date = model.getDate();
+        this.ip = model.getIp();
+        this.request = model.getRequest();
+        this.status = model.getStatus();
+        this.userAgent = model.getUserAgent();
+    }
+
+
+    public DomainLogRequest toDomain() {
+        if (Objects.isNull(this)) return null;
+
+        return DomainLogRequest.builder()
+                .id(this.getId())
+                .date(this.getDate())
+                .ip(this.getIp())
+                .request(this.getRequest())
+                .status(this.getStatus())
+                .userAgent(this.getUserAgent())
+                .build();
+    }
 }
