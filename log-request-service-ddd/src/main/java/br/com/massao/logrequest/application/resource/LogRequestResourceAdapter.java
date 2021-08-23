@@ -25,11 +25,12 @@ import java.net.URI;
 
 /**
  * Log Request Resources Controller
+ * Controller is the Adapter of an external Rest interface
  */
 @Slf4j
 @RestController
 @RequestMapping("v1/log-requests")
-public class LogRequestResource {
+public class LogRequestResourceAdapter {
     @Autowired
     private LogRequestServicePort service;
 

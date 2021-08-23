@@ -30,8 +30,8 @@ import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@WebMvcTest({LogRequestResource.class})  //  Auto-configure the Spring MVC infrastructure for unit tests
-class LogRequestResourceTest {
+@WebMvcTest({LogRequestResourceAdapter.class})  //  Auto-configure the Spring MVC infrastructure for unit tests
+class LogRequestResourceAdapterTest {
     public static final String URL_LIST = "/v1/log-requests";
     public static final String URL_FIND_BY_ID = "/v1/log-requests/{id}";
     public static final String URL_ADD = "/v1/log-requests";

@@ -24,7 +24,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest(classes = LogRequestServiceApplicationDDD.class)
 @AutoConfigureMockMvc
-class LogRequestResourceIntegrationTest {
+class LogRequestResourceAdapterIntegrationTest {
     @Autowired
     private MockMvc mvc;
 
@@ -35,7 +35,7 @@ class LogRequestResourceIntegrationTest {
     LogRequestForm form2 = new LogRequestForm(localDateTime, "ip2", "request2", (short) 201, "userAgent2");
 
     @Autowired
-    LogRequestResource controller;
+    LogRequestResourceAdapter controller;
 
 
     @BeforeEach
