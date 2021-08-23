@@ -1,14 +1,15 @@
-package br.com.massao.logrequest.application.resource;
+package br.com.massao.logrequest.domain;
 
+import br.com.massao.logrequest.domain.DomainLogRequestParams;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertNull;
 
-class LogRequestParamsTest {
+class DomainLogRequestParamsTest {
 
     @Test
     void givenNullValuesWhenCreateThenReturnNull() {
-        LogRequestParams params = new LogRequestParams(null, null, null, null, null, null);
+        DomainLogRequestParams params = new DomainLogRequestParams(null, null, null, null, null, null);
 
         assertNull(params.getStartDate());
         assertNull(params.getEndDate());

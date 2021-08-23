@@ -20,9 +20,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 @ExtendWith(SpringExtension.class)
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-class LogRequestRepositoryTest {
+class JpaLogRequestRepositoryTest {
     @Autowired
-    LogRequestRepository repository;
+    SpringDataJpaLogRequestRepository repository;
 
     LogRequestModel model1;
     LogRequestModel model2;

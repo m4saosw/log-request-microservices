@@ -56,6 +56,8 @@ public class LogRequestModel {
 
 
     public LogRequestModel(DomainLogRequest model) {
+        if (Objects.isNull(model)) return;
+
         this.id = model.getId();
         this.date = model.getDate();
         this.ip = model.getIp();

@@ -1,13 +1,12 @@
 package br.com.massao.logrequest.application.resource;
 
-import br.com.massao.logrequest.application.converter.LogRequestModelConverter;
 import br.com.massao.logrequest.application.dto.LogRequest;
 import br.com.massao.logrequest.application.dto.LogRequestForm;
-import br.com.massao.logrequest.domain.NotFoundException;
-import br.com.massao.logrequest.infrastructure.model.LogRequestModel;
-import br.com.massao.logrequest.infrastructure.repository.query.LogRequestSpecifications;
-import br.com.massao.logrequest.domain.service.LogRequestService;
 import br.com.massao.logrequest.application.util.DateFormatterUtil;
+import br.com.massao.logrequest.domain.DomainLogRequest;
+import br.com.massao.logrequest.domain.DomainLogRequestParams;
+import br.com.massao.logrequest.domain.NotFoundException;
+import br.com.massao.logrequest.domain.service.LogRequestServicePort;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -17,7 +16,6 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -32,7 +30,7 @@ import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@WebMvcTest({LogRequestResource.class, LogRequestModelConverter.class})  //  Auto-configure the Spring MVC infrastructure for unit tests
+@WebMvcTest({LogRequestResource.class})  //  Auto-configure the Spring MVC infrastructure for unit tests
 class LogRequestResourceTest {
     public static final String URL_LIST = "/v1/log-requests";
     public static final String URL_FIND_BY_ID = "/v1/log-requests/{id}";
@@ -44,7 +42,7 @@ class LogRequestResourceTest {
     private MockMvc mvc;
 
     @MockBean
-    private LogRequestService service;
+    private LogRequestServicePort service;
 
     @BeforeEach
     void setUp() {
@@ -59,14 +57,14 @@ class LogRequestResourceTest {
     void givenLogsWhenGetLogsThenReturnJsonLogsWithStatus200() throws Exception {
         // given
         LocalDateTime localDateTime = DateFormatterUtil.localDateTimeFrom("2021-07-17 01:01:01.001");
-        LogRequestModel log1 = new LogRequestModel(1L, localDateTime, "ip1", "request", (short) 200, "userAgent");
-        LogRequestModel log2 = new LogRequestModel(2L, localDateTime, "ip2", "request", (short) 200, "userAgent");
+        DomainLogRequest log1 = new DomainLogRequest(1L, localDateTime, "ip1", "request", (short) 200, "userAgent");
+        DomainLogRequest log2 = new DomainLogRequest(2L, localDateTime, "ip2", "request", (short) 200, "userAgent");
 
-        List<LogRequestModel> model = Arrays.asList(log1, log2);
-        Page<LogRequestModel> pageModel = new PageImpl<>(model);
+        List<DomainLogRequest> domains = Arrays.asList(log1, log2);
+        Page<DomainLogRequest> pageDomain = new PageImpl<>(domains);
 
         // when
-        given(service.list(any(Pageable.class))).willReturn(pageModel);
+        given(service.list(any(Pageable.class))).willReturn(pageDomain);
 
         // then
         mvc.perform(get(URL_LIST)
@@ -97,7 +95,7 @@ class LogRequestResourceTest {
     @Test
     void givenLogsWhenFindByIdLogThenReturnJsonLogWithStatus200() throws Exception {
         // given
-        LogRequestModel log1 = new LogRequestModel(1L, LocalDateTime.now(), "ip1", "request", (short) 200, "userAgent");
+        DomainLogRequest log1 = new DomainLogRequest(1L, LocalDateTime.now(), "ip1", "request", (short) 200, "userAgent");
 
         // when
         given(service.findById(log1.getId())).willReturn(log1);
@@ -119,10 +117,10 @@ class LogRequestResourceTest {
     void givenLogWhenCreateLogThenReturnLocationWithStatus201() throws Exception {
         // given
         LogRequestForm form = new LogRequestForm(LocalDateTime.now(), "ip1", "request", (short) 200, "userAgent");
-        LogRequestModel model = new LogRequestModel(1L, LocalDateTime.now(), "ip1", "request", (short) 200, "userAgent");
+        DomainLogRequest domain = new DomainLogRequest(1L, LocalDateTime.now(), "ip1", "request", (short) 200, "userAgent");
 
         // when
-        given(service.save(any(LogRequestModel.class))).willReturn(model);
+        given(service.save(any(DomainLogRequest.class))).willReturn(domain);
 
         // then
         String jsonObject = asJsonString(form);
@@ -139,13 +137,13 @@ class LogRequestResourceTest {
     @Test
     void givenInvalidBodyWhenCreateLogThenReturnStatus400() throws Exception {
         // given
-        LogRequestModel model = null;
+        DomainLogRequest domain = null;
 
         // when
-        given(service.save(any(LogRequestModel.class))).willReturn(model);
+        given(service.save(any(DomainLogRequest.class))).willReturn(domain);
 
         // then
-        String jsonObject = asJsonString(model);
+        String jsonObject = asJsonString(domain);
 
         mvc.perform(post(URL_ADD)
                 .contentType(MediaType.APPLICATION_JSON)
@@ -157,13 +155,13 @@ class LogRequestResourceTest {
     @Test
     void givenInvalidLogWhenCreateLogThenReturnStatus400() throws Exception {
         // given
-        LogRequestModel model = LogRequestModel.builder().build();
+        DomainLogRequest domain = DomainLogRequest.builder().build();
 
         // when
-        given(service.save(any(LogRequestModel.class))).willReturn(model);
+        given(service.save(any(DomainLogRequest.class))).willReturn(domain);
 
         // then
-        String jsonObject = asJsonString(model);
+        String jsonObject = asJsonString(domain);
 
         mvc.perform(post(URL_ADD)
                 .contentType(MediaType.APPLICATION_JSON)
@@ -189,14 +187,14 @@ class LogRequestResourceTest {
     void givenLogWhenUpdateThenReturnLogWithStatus200() throws Exception {
         // given
         LocalDateTime localDateTime = DateFormatterUtil.localDateTimeFrom("2021-07-17 01:01:01.001");
-        LogRequestModel model = new LogRequestModel(1L, localDateTime, "ip1", "request", (short) 200, "userAgent");
+        DomainLogRequest domain = new DomainLogRequest(1L, localDateTime, "ip1", "request", (short) 200, "userAgent");
         LogRequest log = new LogRequest(1L, localDateTime, "ip1", "request", (short) 200, "userAgent");
 
         // when
-        given(service.update(anyLong(), any())).willReturn(model);
+        given(service.update(anyLong(), any())).willReturn(domain);
 
         // then
-        String jsonObject = asJsonString(new LogRequest(model));
+        String jsonObject = asJsonString(new LogRequest(domain));
         mvc.perform(put(URL_UPDATE, log.getId())
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(jsonObject))
@@ -213,7 +211,7 @@ class LogRequestResourceTest {
     void givenNotFoundWhenUpdateLogThenReturnStatus404() throws Exception {
         // given
         LocalDateTime localDateTime = DateFormatterUtil.localDateTimeFrom("2021-07-17 01:01:01.001");
-        LogRequestModel person1 = new LogRequestModel(1L, localDateTime, "ip1", "request", (short) 200, "userAgent");
+        LogRequestForm person1 = new LogRequestForm(localDateTime, "ip1", "request", (short) 200, "userAgent");
 
         // when
         given(service.update(anyLong(), any())).willThrow(NotFoundException.class);
@@ -238,15 +236,15 @@ class LogRequestResourceTest {
         String dateStr = "2021-07-17 01:01:01.001";
         String dateStr2 = "2021-07-17 01:01:01";
         LocalDateTime localDateTime = DateFormatterUtil.localDateTimeFrom(dateStr);
-        LogRequestModel log1 = new LogRequestModel(1L, localDateTime, "ip1", "request", (short) 200, "userAgent");
+        DomainLogRequest log1 = new DomainLogRequest(1L, localDateTime, "ip1", "request", (short) 200, "userAgent");
 
-        List<LogRequestModel> model = Arrays.asList(log1);
-        Page<LogRequestModel> pageModel = new PageImpl<>(model);
+        List<DomainLogRequest> domains = Arrays.asList(log1);
+        Page<DomainLogRequest> pageDomain = new PageImpl<>(domains);
 
-        final LogRequestParams params = new LogRequestParams(dateStr2, null, null, null, null, null);
+        final DomainLogRequestParams params = new DomainLogRequestParams(dateStr2, null, null, null, null, null);
 
         // when
-        given(service.searchByFilters(any(Specification.class), any(Pageable.class))).willReturn(pageModel);
+        given(service.searchByFilters(any(DomainLogRequestParams.class), any(Pageable.class))).willReturn(pageDomain);
 
         // then
         mvc.perform(get(URL_SEARCH)
@@ -272,15 +270,15 @@ class LogRequestResourceTest {
         String dateStr = "2021-07-17 01:01:01.001";
         String dateStr2 = "2021-07-17 01:01:01";
         LocalDateTime localDateTime = DateFormatterUtil.localDateTimeFrom(dateStr);
-        LogRequestModel log1 = new LogRequestModel(1L, localDateTime, "ip1", "request", (short) 200, "userAgent");
+        DomainLogRequest log1 = new DomainLogRequest(1L, localDateTime, "ip1", "request", (short) 200, "userAgent");
 
-        List<LogRequestModel> model = Arrays.asList(log1);
-        Page<LogRequestModel> pageModel = new PageImpl<>(model);
+        List<DomainLogRequest> domains = Arrays.asList(log1);
+        Page<DomainLogRequest> pageDomain = new PageImpl<>(domains);
 
-        final LogRequestParams params = new LogRequestParams(dateStr2, dateStr2, log1.getIp(), log1.getRequest(), Short.toString(log1.getStatus()), log1.getUserAgent());
+        final DomainLogRequestParams params = new DomainLogRequestParams(dateStr2, dateStr2, log1.getIp(), log1.getRequest(), Short.toString(log1.getStatus()), log1.getUserAgent());
 
         // when
-        given(service.searchByFilters(any(Specification.class), any(Pageable.class))).willReturn(pageModel);
+        given(service.searchByFilters(any(DomainLogRequestParams.class), any(Pageable.class))).willReturn(pageDomain);
 
         // then
         mvc.perform(get(URL_SEARCH)
@@ -307,13 +305,12 @@ class LogRequestResourceTest {
     @Test
     void givenNoQueriesWhenGetSearchLogsThenReturnJsonLogsWithStatus400() throws Exception {
         // given
-        Page<LogRequestModel> pageModel = new PageImpl<>(Arrays.asList());
+        Page<DomainLogRequest> pageDomain = new PageImpl<>(Arrays.asList());
 
-        final LogRequestParams params = new LogRequestParams(null, null, null, null, null, null);
-        final Specification<LogRequestModel> specification = new LogRequestSpecifications().fromParams(params);
+        final DomainLogRequestParams params = new DomainLogRequestParams(null, null, null, null, null, null);
 
         // when
-        given(service.searchByFilters(eq(specification), any(Pageable.class))).willReturn(pageModel);
+        given(service.searchByFilters(eq(params), any(Pageable.class))).willReturn(pageDomain);
 
         // then
         mvc.perform(get(URL_SEARCH)
